@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/aadi/proj/Trajectory-Generation-and-Following/build",
+  "command": "/usr/bin/g++   -I/home/aadi/proj/Trajectory-Generation-and-Following/include -I/usr/include/eigen3  -g   -o CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/bin/cubicTraj.cpp",
+  "file": "/home/aadi/proj/Trajectory-Generation-and-Following/bin/cubicTraj.cpp"
+},
+{
+  "directory": "/home/aadi/proj/Trajectory-Generation-and-Following/build",
+  "command": "/usr/bin/g++  -DTrajectory_EXPORTS -I/home/aadi/proj/Trajectory-Generation-and-Following/include -I/usr/include/eigen3  -g -fPIC   -o CMakeFiles/Trajectory.dir/src/cubic.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp",
+  "file": "/home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp"
+}
+]

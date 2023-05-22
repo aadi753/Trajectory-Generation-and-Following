@@ -1,0 +1,1 @@
+/usr/bin/g++ -fPIC -g  -shared -Wl,-soname,libTrajectory.so -o libTrajectory.so CMakeFiles/Trajectory.dir/src/cubic.cpp.o 
