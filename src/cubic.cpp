@@ -1,15 +1,15 @@
 #include <cubic.h>
 
-Cubic::Cubic(int dof, int finalTime,int waypoints)
+Cubic::Cubic(int dof, int finalTime, int waypoints)
 {
      _waypts = waypoints;
      _dof = dof;
      _finalTime = finalTime;
-     Eigen::VectorXd tStep=Eigen::VectorXd::Zero(_waypts);
+     Eigen::VectorXd tStep = Eigen::VectorXd::Zero(_waypts);
 
-     tStep=tStep.LinSpaced(_waypts, 0, finalTime);
+     tStep = tStep.LinSpaced(_waypts, 0, finalTime);
      _timeStep = tStep;
-     std::cout << "TIME STEP: " << tStep <<" "<<tStep.size()<< "\n\n";
+     std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
 void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel)
@@ -31,8 +31,8 @@ void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_p
      A(2, 2) = pow(_finalTime, 2);
      A(2, 3) = pow(_finalTime, 3);
      A(3, 1) = 1.0;
-     A(3, 2) = 2 * (_finalTime);
-     A(3, 3) = 3 * pow(_finalTime, 2);
+     A(3, 2) = 2.0 * (_finalTime);
+     A(3, 3) = 3.0 * pow(_finalTime, 2);
 
      //*calculating inverse of the above matrix */
      A_INV = A.inverse();
@@ -92,17 +92,25 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
                jointPosVec.emplace_back(posResult);
                jointVelVec.emplace_back(velResult);
           }
-          
-          printVec(jointPosVec);
-          
+
+          // printVec(jointVelVec);
+
           _finalPath.emplace_back(jointPosVec);
           _finalVel.emplace_back(jointVelVec);
 
           jointPosVec.clear();
           jointVelVec.clear();
      }
+     printMat(_finalPath);
 }
 
+Cubic::~Cubic()
+{
+     std::cout << "SAB KHATAM KARDIA BHAI :/ "
+               << "\n";
+}
+
+// ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVE FROM HERE LATER. :)
 void Cubic::printVec(std::vector<double> input)
 {
      for (size_t i = 0; i < input.size(); i++)
@@ -112,7 +120,14 @@ void Cubic::printVec(std::vector<double> input)
      std::cout << "\n\n";
 }
 
-Cubic::~Cubic()
+void Cubic::printMat(std::vector<std::vector<double>> input)
 {
-     std::cout << "SAB KHATAM KARDIA BHAI :/ "<< "\n";
+     for (auto &ele : input)
+     {
+          for (auto &el : ele)
+          {
+               std::cout << el << " ";
+          }
+          std::cout << "\n";
+     }
 }

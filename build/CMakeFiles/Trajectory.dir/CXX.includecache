@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../include/cubic.h
+../include/quintic.h
 iostream
 -
 Eigen/Dense
@@ -16,8 +16,8 @@ Eigen/LU
 vector
 -
 
-/home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp
-cubic.h
+/home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp
+quintic.h
 -
 
 /usr/include/eigen3/Eigen/Cholesky

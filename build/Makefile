@@ -190,6 +190,33 @@ src/cubic.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubic.cpp.s
 .PHONY : src/cubic.cpp.s
 
+src/quintic.o: src/quintic.cpp.o
+
+.PHONY : src/quintic.o
+
+# target to build an object file
+src/quintic.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintic.cpp.o
+.PHONY : src/quintic.cpp.o
+
+src/quintic.i: src/quintic.cpp.i
+
+.PHONY : src/quintic.i
+
+# target to preprocess a source file
+src/quintic.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintic.cpp.i
+.PHONY : src/quintic.cpp.i
+
+src/quintic.s: src/quintic.cpp.s
+
+.PHONY : src/quintic.s
+
+# target to generate assembly for a file
+src/quintic.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintic.cpp.s
+.PHONY : src/quintic.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -206,6 +233,9 @@ help:
 	@echo "... src/cubic.o"
 	@echo "... src/cubic.i"
 	@echo "... src/cubic.s"
+	@echo "... src/quintic.o"
+	@echo "... src/quintic.i"
+	@echo "... src/quintic.s"
 .PHONY : help
 
 

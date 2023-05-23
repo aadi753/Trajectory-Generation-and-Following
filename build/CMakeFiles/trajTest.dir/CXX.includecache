@@ -16,8 +16,20 @@ Eigen/LU
 vector
 -
 
+../include/quintic.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+
 /home/aadi/proj/Trajectory-Generation-and-Following/bin/cubicTraj.cpp
 cubic.h
+-
+quintic.h
 -
 memory
 -
