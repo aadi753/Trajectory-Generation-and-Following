@@ -16,6 +16,16 @@ Eigen/LU
 vector
 -
 
+../include/parabolicBlend.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+
 ../include/quintic.h
 iostream
 -
@@ -30,6 +40,8 @@ vector
 cubic.h
 -
 quintic.h
+-
+parabolicBlend.h
 -
 memory
 -
