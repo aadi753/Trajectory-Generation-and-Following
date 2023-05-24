@@ -12,7 +12,7 @@ class ParabolicBlend
 public:
      ParabolicBlend(int dof, int finalTime, int waypoints);
 
-     void calcCoeffs(std::vector<double> init_pos,std::vector<double> final_pos,std::vector<double> blendVel, std::vector<double> blendAccel);
+     void calcCoeffs(std::vector<double> init_pos,std::vector<double> final_pos,double blendVel, double blendAccel);
 
      void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime);
 
@@ -32,18 +32,16 @@ private:
      int _waypts;
      double _finalTime;
 
+     double _blendTime;
+     double _blendVel;
+     double _blendAccel;
+     
      std::vector<std::vector<double>> _finalPath;
      std::vector<std::vector<double>> _finalVel;
      std::vector<std::vector<double>> _finalAccel;
      std::vector<std::vector<double>> _finalCoeffMat;
 
-     std::vector<double> _blendTime;
-     std::vector<double> _blendVel;
-     std::vector<double> _blendAccel;
-
-     // std::vector<double> _inital_vel;
-     // std::vector<double> _final_vel;
-
+     
      Eigen::VectorXd _timeStep;
 };
 

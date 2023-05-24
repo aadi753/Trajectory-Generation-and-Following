@@ -12,25 +12,22 @@ ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints)
      _timeStep = tStep;
      std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 
-     _blendTime.resize(_dof, 0);
+     // _blendTime.resize(_dof, 0);
 }
 
-void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> blendVel, std::vector<double> blendAccel)
+void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double blendVel, double blendAccel)
 {
      _blendVel = blendVel;
      _blendAccel = blendAccel;
+
+     _blendTime = _blendVel / _blendAccel;
 
      // TODO add a size check with dof for the 2 vectors.
 
      std::vector<double> results;
      for (size_t i = 0; i < _dof; i++)
      {
-          _blendTime[i] = _blendVel[i] / _blendAccel[i];
-
-          results.emplace_back(_blendTime[i]);
           results.emplace_back(init_pos[i]);
-          results.emplace_back(_blendVel[i]);
-          results.emplace_back(_blendAccel[i]);
           results.emplace_back(final_pos[i]);
 
           _finalCoeffMat.emplace_back(results);
@@ -55,32 +52,35 @@ void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> totalCo
 
           for (auto ele : totalCoeffMat)
           {
-               if (t < ele[0])
+               if (t < _blendTime)
                {
-                    s = ((0.5) * ele[3] * t * t);
-                    
-                    s_dot = ele[3] * t;
-                    s_ddot = ele[3];
+                    s = ((0.5) * _blendAccel * t * t);
 
-                    
+                    s_dot = _blendAccel * t;
+
+                    s_ddot = _blendAccel;
                }
 
-               else if (t > ele[0] && t < (_finalTime - ele[0]))
+               else if (t > _blendTime && t < (_finalTime - _blendTime))
                {
-                    s = ((0.5) * (ele[3] * (ele[0] * ele[0]))) + (ele[2] * (t - ele[0]));
+                    s = ((0.5) * (_blendAccel * (_blendTime * _blendTime))) + (_blendVel * (t - _blendTime));
+
                     s_dot = ele[2];
+
                     s_ddot = 0;
                }
                else
                {
-               
-                    s = ((0.5) * ele[3] * pow(ele[0], 2)) + (ele[2] * (_finalTime - (2 * ele[0]))) + (((0.5) * ele[3]) * pow((t - (_finalTime - ele[0])), 2));
-                    s_dot = ele[2] - ele[3] * (t - (_finalTime - ele[0]));
-                    s_ddot = -(ele[0]);
+
+                    s = ((0.5) * _blendAccel * pow(_blendTime, 2)) + (_blendVel * (_finalTime - (2 * _blendTime))) + (_blendVel * (t - (_finalTime - _blendTime))) - (((0.5) * _blendAccel) * pow((t - (_finalTime - _blendTime)), 2));
+
+                    s_dot = ele[2] - _blendAccel * (t - (_finalTime - _blendTime));
+
+                    s_ddot = -(_blendAccel);
                }
-               double pos = ele[1] + (ele[4] - ele[1]) * s;
-               double vel = (ele[4] - ele[1]) * s_dot;
-               double accel = (ele[4] - ele[1]) * s_ddot;
+               double pos = ele[0] + (ele[1] - ele[0]) * s;
+               double vel = (ele[1] - ele[0]) * s_dot;
+               double accel = (ele[1] - ele[0]) * s_ddot;
 
                posVec.emplace_back(pos);
                velVec.emplace_back(vel);
@@ -88,8 +88,8 @@ void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> totalCo
           }
 
           //* print the vectors here to see the values.
+          // std::cout << posVec[2] << "\n";
 
-     
           _finalPath.emplace_back(posVec);
           _finalVel.emplace_back(velVec);
           _finalAccel.emplace_back(accelVec);
