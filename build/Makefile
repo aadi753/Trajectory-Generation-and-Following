@@ -190,6 +190,33 @@ src/cubic.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubic.cpp.s
 .PHONY : src/cubic.cpp.s
 
+src/parabolicBlend.o: src/parabolicBlend.cpp.o
+
+.PHONY : src/parabolicBlend.o
+
+# target to build an object file
+src/parabolicBlend.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o
+.PHONY : src/parabolicBlend.cpp.o
+
+src/parabolicBlend.i: src/parabolicBlend.cpp.i
+
+.PHONY : src/parabolicBlend.i
+
+# target to preprocess a source file
+src/parabolicBlend.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.i
+.PHONY : src/parabolicBlend.cpp.i
+
+src/parabolicBlend.s: src/parabolicBlend.cpp.s
+
+.PHONY : src/parabolicBlend.s
+
+# target to generate assembly for a file
+src/parabolicBlend.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.s
+.PHONY : src/parabolicBlend.cpp.s
+
 src/quintic.o: src/quintic.cpp.o
 
 .PHONY : src/quintic.o
@@ -233,6 +260,9 @@ help:
 	@echo "... src/cubic.o"
 	@echo "... src/cubic.i"
 	@echo "... src/cubic.s"
+	@echo "... src/parabolicBlend.o"
+	@echo "... src/parabolicBlend.i"
+	@echo "... src/parabolicBlend.s"
 	@echo "... src/quintic.o"
 	@echo "... src/quintic.i"
 	@echo "... src/quintic.s"
