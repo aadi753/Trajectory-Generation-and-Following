@@ -4,6 +4,7 @@
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/cubic.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/parabolicBlend.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/quintic.h
+CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/septic.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../bin/cubicTraj.cpp
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: /usr/include/eigen3/Eigen/Core

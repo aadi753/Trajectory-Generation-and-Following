@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp" "/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/cubic.cpp.o"
   "/home/aadi/proj/Trajectory-Generation-and-Following/src/parabolicBlend.cpp" "/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o"
   "/home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp" "/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/quintic.cpp.o"
+  "/home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp" "/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/septic.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

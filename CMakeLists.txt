@@ -13,6 +13,7 @@ add_library(Trajectory SHARED
      src/cubic.cpp
      src/quintic.cpp
      src/parabolicBlend.cpp
+     src/septic.cpp
 )
 
 

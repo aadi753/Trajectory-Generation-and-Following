@@ -36,12 +36,24 @@ Eigen/LU
 vector
 -
 
+../include/septic.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+
 /home/aadi/proj/Trajectory-Generation-and-Following/bin/cubicTraj.cpp
 cubic.h
 -
 quintic.h
 -
 parabolicBlend.h
+-
+septic.h
 -
 memory
 -

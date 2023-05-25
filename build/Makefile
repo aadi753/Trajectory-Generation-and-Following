@@ -244,6 +244,33 @@ src/quintic.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintic.cpp.s
 .PHONY : src/quintic.cpp.s
 
+src/septic.o: src/septic.cpp.o
+
+.PHONY : src/septic.o
+
+# target to build an object file
+src/septic.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/septic.cpp.o
+.PHONY : src/septic.cpp.o
+
+src/septic.i: src/septic.cpp.i
+
+.PHONY : src/septic.i
+
+# target to preprocess a source file
+src/septic.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/septic.cpp.i
+.PHONY : src/septic.cpp.i
+
+src/septic.s: src/septic.cpp.s
+
+.PHONY : src/septic.s
+
+# target to generate assembly for a file
+src/septic.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/septic.cpp.s
+.PHONY : src/septic.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -266,6 +293,9 @@ help:
 	@echo "... src/quintic.o"
 	@echo "... src/quintic.i"
 	@echo "... src/quintic.s"
+	@echo "... src/septic.o"
+	@echo "... src/septic.i"
+	@echo "... src/septic.s"
 .PHONY : help
 
 

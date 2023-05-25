@@ -29,7 +29,7 @@ void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final
      //* filling the matrix having coeff of quintic eqn.
      A(0, 0) = 1.0;
      A(1, 1) = 1.0;
-     A(2, 3) = 2.0;
+     A(2, 2) = 2.0;
      A(3, 0) = 1.0;
      A(3, 1) = _finalTime;
      A(3, 2) = pow(_finalTime, 2);
@@ -113,6 +113,7 @@ void Quintic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat,
           }
 
           // printVec(jointPosVec);
+          std::cout << jointVelVec[2] << "\n";
 
           _finalPath.emplace_back(jointPosVec);
           _finalVel.emplace_back(jointVelVec);
@@ -122,7 +123,7 @@ void Quintic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat,
           jointVelVec.clear();
           jointAccelVec.clear();
      }
-     printMat(_finalAccel);
+     // printMat(_finalPath);
 }
 
 Quintic::~Quintic()

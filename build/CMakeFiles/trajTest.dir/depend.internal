@@ -5,6 +5,7 @@ CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o
  ../include/cubic.h
  ../include/parabolicBlend.h
  ../include/quintic.h
+ ../include/septic.h
  /home/aadi/proj/Trajectory-Generation-and-Following/bin/cubicTraj.cpp
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core
