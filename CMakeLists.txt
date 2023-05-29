@@ -14,6 +14,7 @@ add_library(Trajectory SHARED
      src/quintic.cpp
      src/parabolicBlend.cpp
      src/septic.cpp
+     src/cubic_via_point.cpp
 )
 
 

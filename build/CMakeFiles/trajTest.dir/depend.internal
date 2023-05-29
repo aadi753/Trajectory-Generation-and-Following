@@ -3,6 +3,7 @@
 
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o
  ../include/cubic.h
+ ../include/cubic_via_point.h
  ../include/parabolicBlend.h
  ../include/quintic.h
  ../include/septic.h

@@ -23,5 +23,10 @@
   "directory": "/home/aadi/proj/Trajectory-Generation-and-Following/build",
   "command": "/usr/bin/g++  -DTrajectory_EXPORTS -I/home/aadi/proj/Trajectory-Generation-and-Following/include -I/usr/include/eigen3  -g -fPIC   -o CMakeFiles/Trajectory.dir/src/septic.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp",
   "file": "/home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp"
+},
+{
+  "directory": "/home/aadi/proj/Trajectory-Generation-and-Following/build",
+  "command": "/usr/bin/g++  -DTrajectory_EXPORTS -I/home/aadi/proj/Trajectory-Generation-and-Following/include -I/usr/include/eigen3  -g -fPIC   -o CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp",
+  "file": "/home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp"
 }
 ]

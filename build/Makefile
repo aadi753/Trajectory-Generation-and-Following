@@ -190,6 +190,33 @@ src/cubic.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubic.cpp.s
 .PHONY : src/cubic.cpp.s
 
+src/cubic_via_point.o: src/cubic_via_point.cpp.o
+
+.PHONY : src/cubic_via_point.o
+
+# target to build an object file
+src/cubic_via_point.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o
+.PHONY : src/cubic_via_point.cpp.o
+
+src/cubic_via_point.i: src/cubic_via_point.cpp.i
+
+.PHONY : src/cubic_via_point.i
+
+# target to preprocess a source file
+src/cubic_via_point.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.i
+.PHONY : src/cubic_via_point.cpp.i
+
+src/cubic_via_point.s: src/cubic_via_point.cpp.s
+
+.PHONY : src/cubic_via_point.s
+
+# target to generate assembly for a file
+src/cubic_via_point.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.s
+.PHONY : src/cubic_via_point.cpp.s
+
 src/parabolicBlend.o: src/parabolicBlend.cpp.o
 
 .PHONY : src/parabolicBlend.o
@@ -287,6 +314,9 @@ help:
 	@echo "... src/cubic.o"
 	@echo "... src/cubic.i"
 	@echo "... src/cubic.s"
+	@echo "... src/cubic_via_point.o"
+	@echo "... src/cubic_via_point.i"
+	@echo "... src/cubic_via_point.s"
 	@echo "... src/parabolicBlend.o"
 	@echo "... src/parabolicBlend.i"
 	@echo "... src/parabolicBlend.s"

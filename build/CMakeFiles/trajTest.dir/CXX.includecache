@@ -16,6 +16,16 @@ Eigen/LU
 vector
 -
 
+../include/cubic_via_point.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+
 ../include/parabolicBlend.h
 iostream
 -
@@ -48,6 +58,8 @@ vector
 
 /home/aadi/proj/Trajectory-Generation-and-Following/bin/cubicTraj.cpp
 cubic.h
+-
+cubic_via_point.h
 -
 quintic.h
 -
