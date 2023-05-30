@@ -1,5 +1,26 @@
+/**
+ * @file cubic_via_point.cpp
+ * @author Aditya Singh (aditya.in753@gmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2023-05-30
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
+
+
 #include <cubic_via_point.h>
 
+/**
+ * @brief Construct a new Cubic Via Point:: Cubic Via Point object
+ *  takes in the following as input and also generates equally spaced time points.
+
+ * @param dof  number of joints for which trajectory is needed
+ * @param viaptTime  time to reach the viaPoint.
+ * @param finalTime  total time of trajectory
+ * @param waypoints  no. of waypoints in the trajectory
+ */
 CubicViaPoint::CubicViaPoint(int dof, int viaptTime, int finalTime, int waypoints)
 {
      _waypts = waypoints;
@@ -13,12 +34,21 @@ CubicViaPoint::CubicViaPoint(int dof, int viaptTime, int finalTime, int waypoint
      // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
+/**
+ * @brief used to calculate the coefficients of the cubic polynomial that are to be used for generating the positions and velocities.
+ *
+ * @param init_pos a vector of inital joint positions.
+ * @param viaPoint a vector of joint positions at the viaPoint.
+ * @param final_pos a vector of final joint positions.
+ * @param init_vel  a vector of inital joint velocities.
+ * @param final_vel a vector of final joint velocities.
+ */
 void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel)
 {
      init_vel.resize(_dof, 0.0);
      final_vel.resize(_dof, 0.0);
 
-     // Ax=B
+     // Ax=B (statespace format).
      Eigen::MatrixXd A = Eigen::MatrixXd::Zero(8, 8);     // matrix having coeff of the constants in cubic eqn.
      Eigen::MatrixXd A_INV = Eigen::MatrixXd::Zero(8, 8); // inveresee of the above matrix.
      Eigen::VectorXd x = Eigen::VectorXd::Zero(8);        // the inital and final condition vector having inital and final position and velocity.
@@ -73,8 +103,7 @@ void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double>
           B[6] = 0.0;
           B[7] = 0.0;
 
-          x = A_INV * B;
-          // std::cout << "X: " << x << " " << i << " " << "\n";
+          x = A_INV * B; // * calculating the coefficients of cubic polynomial for all joints
 
           // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
 
@@ -82,9 +111,6 @@ void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double>
           {
                result[i] = x[i];
           }
-
-          // std::cout << "values of constants: "
-          //           << "\n";
 
           // printVec(result);
 
@@ -95,6 +121,12 @@ void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double>
      generatePathAndVel(_finalConstMat, _timeStep);
 }
 
+/**
+ * @brief generates the total path and the velocities for the no. of DOF.
+ *
+ * @param totalCoeffMat matrix of coefficients of the cubic poly for all DOF. size should be 8xDOF(m x n).
+ * @param linSpacedTime vector of equally spaced time intervals.
+ */
 void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)
 {
      double t;
@@ -103,20 +135,19 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
 
      for (size_t i = 0; i < linSpacedTime.size(); i++)
      {
-          // std::cout << "index: " << i << std::endl;
-          t = linSpacedTime[i];
+          t = linSpacedTime[i]; // time vaires from 0 to _finalTime.
           double posResult{0};
           double velResult{0};
 
           for (auto ele : totalCoeffMat)
           {
-               if (t < _viaPtTime)
+               if (t < _viaPtTime) // first segment
                {
                     posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t);
 
                     velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t);
                }
-               else
+               else // second segment.
                {
                     posResult = (ele[4] * 1) + (ele[5] * (t - _viaPtTime)) + (ele[6] * pow((t - _viaPtTime), 2)) + (ele[7] * pow((t - _viaPtTime), 3));
 
@@ -127,19 +158,25 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
                jointVelVec.emplace_back(velResult);
           }
 
-          // printVec(jointVelVec);
-          // std::cout << jointPosVec[4] << '\n';
-          
+          //* print the vectors here to observe the values.
+          //  printVec(jointVelVec);
+          //  std::cout << jointPosVec[4] << '\n';
+
           _finalPath.emplace_back(jointPosVec);
           _finalVel.emplace_back(jointVelVec);
 
           jointPosVec.clear();
           jointVelVec.clear();
      }
-     printMat(_finalPath);
+     // *print the matrices here to observe the values
+     // printMat(_finalPath);
 }
-
-CubicViaPoint::~CubicViaPoint()
+/**
+*@brief Destroy the Cubic Via Point::Cubic Via Point object
+ *
+ * /
+            
+    CubicViaPoint::~CubicViaPoint()
 {
      std::cout << "SAB KHATAM KARDIA BHAI :/ "
                << "\n";

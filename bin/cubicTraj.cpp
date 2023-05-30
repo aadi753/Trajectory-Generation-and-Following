@@ -1,14 +1,15 @@
-#include<cubic.h>
-#include<cubic_via_point.h>
-#include<quintic.h>
-#include<parabolicBlend.h>
-#include<septic.h>
+#include <cubic.h>
+#include <cubic_via_point.h>
+#include <quintic.h>
+#include <parabolicBlend.h>
+#include <septic.h>
 
-#include<memory>
-#include<chrono>
+#include <memory>
+#include <chrono>
 
-int main(){
-     std::unique_ptr<CubicViaPoint> q = std::make_unique<CubicViaPoint>(6,2,5, 200);
+int main()
+{
+     std::unique_ptr<CubicViaPoint> q = std::make_unique<CubicViaPoint>(6, 2, 5, 200);
 
      std::vector<double> fPos{0.5, 0.3, 0.9, 0.7, 8, 0.4};
 
@@ -32,8 +33,11 @@ int main(){
 
      auto start = std::chrono::high_resolution_clock::now();
      // q->calcCoeffs(iPos, fPos,ivel,fvel,iacc,facc,ijerk,fjerk);
-     q->calcCoeffs(iPos, viapt,fPos,ivel,fvel);
+
+     q->calcCoeffs(iPos, viapt, fPos, ivel, fvel);
+
      auto end = std::chrono::high_resolution_clock::now();
      auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-     std::cout << "TIME TAKEN IS: "<<duration.count()<<"ms "<< std::endl;
+
+     std::cout << "TIME TAKEN IS: " << duration.count() << "ms " << std::endl;
 }

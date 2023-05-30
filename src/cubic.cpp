@@ -1,5 +1,23 @@
+/**
+ * @file cubic.cpp
+ * @author Aditya Singh (aditya.in753@gmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2023-05-31
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
+
 #include <cubic.h>
 
+/**
+ * @brief Construct a new Cubic::Cubic object
+ *
+ * @param dof no. of joints for which trajectory is needed.
+ * @param finalTime total time of trajectory.
+ * @param waypoints no. of waypoints to be generated from inital to final point.
+ */
 Cubic::Cubic(int dof, int finalTime, int waypoints)
 {
      _waypts = waypoints;
@@ -12,6 +30,14 @@ Cubic::Cubic(int dof, int finalTime, int waypoints)
      std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
+/**
+ * @brief calculates the coefficients of the cubic polynomial that are to be used for generating the path and the velocities.
+ *
+ * @param init_pos vector of intial joint positions.
+ * @param final_pos vector of final joint positions.
+ * @param init_vel vector of intial joint velocities.
+ * @param final_vel vector of final joint velocities.
+ */
 void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel)
 {
      init_vel.resize(_dof, 0.0);
@@ -49,8 +75,7 @@ void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_p
           B[2] = final_pos[i];
           B[3] = final_vel[i];
 
-          x = A_INV * B;
-          // std::cout << "X: " << x << " " << i << " " << "\n";
+          x = A_INV * B; // * calculating the coefficients of cubic polynomial for all joints
 
           // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
 
@@ -59,10 +84,8 @@ void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_p
                result[i] = x[i];
           }
 
-          std::cout << "values of constants: "
-                    << "\n";
+          // printVec(result);
 
-          printVec(result);
           _finalConstMat.emplace_back(result);
 
      } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
@@ -70,6 +93,12 @@ void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_p
      generatePathAndVel(_finalConstMat, _timeStep);
 }
 
+/**
+ * @brief generates the total path and velocities for the joints from inital to final position.
+ *
+ * @param totalCoeffMat the coefficient matrix having coeff of cubic poly for respective joints.
+ * @param linSpacedTime vector of equally spaced time intervals.
+ */
 void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)
 {
      double t;
@@ -78,13 +107,13 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
 
      for (size_t i = 0; i < linSpacedTime.size(); i++)
      {
-          // std::cout << "index: " << i << std::endl;
-          t = linSpacedTime[i];
+          t = linSpacedTime[i]; // time goes from 0 to _finalTime.
           double posResult;
           double velResult;
 
           for (auto ele : totalCoeffMat)
           {
+               // using the coefficients calculated above to generate path and velocities.
                posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t);
 
                velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t);
@@ -93,6 +122,7 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
                jointVelVec.emplace_back(velResult);
           }
 
+          // * print the vectors here to observe the values.
           // printVec(jointVelVec);
 
           _finalPath.emplace_back(jointPosVec);
@@ -101,9 +131,14 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
           jointPosVec.clear();
           jointVelVec.clear();
      }
-     printMat(_finalPath);
+     // * print the matrices here to observe the values.
+     // printMat(_finalPath);
 }
 
+/**
+ * @brief Destroy the Cubic::Cubic object
+ *
+ */
 Cubic::~Cubic()
 {
      std::cout << "SAB KHATAM KARDIA BHAI :/ "
