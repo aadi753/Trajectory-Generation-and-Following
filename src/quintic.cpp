@@ -1,5 +1,26 @@
+/**
+ * @file quintic.cpp
+ * @author Aditya Singh (aditya.in753@gmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2023-05-31
+ *
+ * @copyright Copyright (c) 2023
+ *
+ *
+ *
+ *
+ * /
+
 #include <quintic.h>
 
+/**
+ * @brief Construct a new Quintic:: Quintic object
+ * 
+ * @param dof 
+ * @param finalTime 
+ * @param waypoints 
+ */
 Quintic::Quintic(int dof, int finalTime, int waypoints)
 {
      _waypts = waypoints;
@@ -47,41 +68,41 @@ void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final
      A(5, 5) = 20.0 * pow(_finalTime, 3);
 
      //*calculating inverse of the above matrix */
-     A_INV = A.inverse();
+A_INV = A.inverse();
 
-     //* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
+//* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
 
-     for (size_t i = 0; i < _dof; i++)
+for (size_t i = 0; i < _dof; i++)
+{
+     std::vector<double> result;
+     result.resize(x.size(), 0.0);
+
+     B[0] = init_pos[i];
+     B[1] = init_vel[i];
+     B[2] = init_accel[i];
+     B[3] = final_pos[i];
+     B[4] = final_vel[i];
+     B[5] = final_accel[i];
+
+     x = A_INV * B;
+     // std::cout << "X: " << x << " " << i << " " << "\n";
+
+     // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
+
+     for (size_t i = 0; i < x.size(); i++)
      {
-          std::vector<double> result;
-          result.resize(x.size(), 0.0);
+          result[i] = x[i];
+     }
 
-          B[0] = init_pos[i];
-          B[1] = init_vel[i];
-          B[2] = init_accel[i];
-          B[3] = final_pos[i];
-          B[4] = final_vel[i];
-          B[5] = final_accel[i];
+     std::cout << "values of constants: "
+               << "\n";
 
-          x = A_INV * B;
-          // std::cout << "X: " << x << " " << i << " " << "\n";
+     printVec(result);
+     _finalConstMat.emplace_back(result);
 
-          // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
+} //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
 
-          for (size_t i = 0; i < x.size(); i++)
-          {
-               result[i] = x[i];
-          }
-
-          std::cout << "values of constants: "
-                    << "\n";
-
-          printVec(result);
-          _finalConstMat.emplace_back(result);
-
-     } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
-
-     generatePathAndVel(_finalConstMat, _timeStep);
+generatePathAndVel(_finalConstMat, _timeStep);
 }
 
 void Quintic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)

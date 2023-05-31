@@ -10,12 +10,16 @@ class ParabolicBlend
 {
 
 public:
-     ParabolicBlend(int dof, int finalTime, int waypoints);
+     // Constructor
+     ParabolicBlend(int dof, int finalTime, int waypoints = 100);
 
-     void calcCoeffs(std::vector<double> init_pos,std::vector<double> final_pos,double blendVel, double blendAccel);
+     // Function to calculate coefficients for path and velocity generation.
+     void calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double blendVel = 0.25, double blendAccel = 0.25);
 
-     void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime);
+     // Function to generate the final path ,velocities and accelerations
+     void generatePathAndVel(std::vector<std::vector<double>> init_final_posMat, Eigen::VectorXd linSpacedTime);
 
+     // Helper function to print the matrices and vectors.
      void printVec(std::vector<double> input);
      void printMat(std::vector<std::vector<double>> input);
 
@@ -32,17 +36,16 @@ private:
      int _waypts;
      double _finalTime;
 
-     double _blendTime;
-     double _blendVel;
-     double _blendAccel;
-     
+     double _blendTime;  // time after which the linear portion starts
+     double _blendVel;   // velocity at the blend point
+     double _blendAccel; // acceleration at the blend point
+
      std::vector<std::vector<double>> _finalPath;
      std::vector<std::vector<double>> _finalVel;
      std::vector<std::vector<double>> _finalAccel;
      std::vector<std::vector<double>> _finalCoeffMat;
 
-     
-     Eigen::VectorXd _timeStep;
+     Eigen::VectorXd _timeStep; // vector of equally spaced time intervals
 };
 
 #endif /* DA23E969_70DB_4BC8_8296_18614F724C6B */
