@@ -27,7 +27,7 @@ Cubic::Cubic(int dof, int finalTime, int waypoints)
 
      tStep = tStep.LinSpaced(_waypts, 0, finalTime);
      _timeStep = tStep;
-     std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
+     // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
 /**
@@ -65,9 +65,9 @@ void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_p
 
      //* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
 
+     std::vector<double> result;
      for (size_t i = 0; i < _dof; i++)
      {
-          std::vector<double> result;
           result.resize(x.size(), 0.0);
 
           B[0] = init_pos[i];
@@ -87,6 +87,7 @@ void Cubic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_p
           // printVec(result);
 
           _finalConstMat.emplace_back(result);
+          result.clear();
 
      } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
 

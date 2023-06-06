@@ -66,9 +66,9 @@ void Septic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
 
      //* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
 
+     std::vector<double> result;
      for (size_t i = 0; i < _dof; i++)
      {
-          std::vector<double> result;
           result.resize(x.size(), 0.0);
 
           B[0] = init_pos[i];
@@ -94,8 +94,9 @@ void Septic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
           std::cout << "values of constants: "
                     << "\n";
 
-          printVec(result);
+          // printVec(result);
           _finalConstMat.emplace_back(result);
+          result.clear();
 
      } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
 
@@ -123,7 +124,7 @@ void Septic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, 
           {
                posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t) + (ele[4] * t * t * t * t) + (ele[5] * t * t * t * t * t) + (ele[6] * t * t * t * t * t * t) + (ele[7] * t * t * t * t * t * t * t);
 
-               velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t) + (ele[4] * 4 * t * t * t) + (ele[5] * 5 * t * t * t * t) + (ele[6] * 6 *t * t * t * t * t) + (ele[7] * 7 * t * t * t * t * t * t);
+               velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t) + (ele[4] * 4 * t * t * t) + (ele[5] * 5 * t * t * t * t) + (ele[6] * 6 * t * t * t * t * t) + (ele[7] * 7 * t * t * t * t * t * t);
 
                accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) + (ele[3] * 6 * t) + (ele[4] * 12 * t * t) + (ele[5] * 20 * t * t * t) + (ele[6] * 30 * t * t * t * t) + (ele[7] * 42 * t * t * t * t * t);
 
@@ -147,7 +148,7 @@ void Septic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, 
           jointAccelVec.clear();
           jointJerkVec.clear();
      }
-     // printMat(_finalPath);
+     printMat(_finalPath);
 }
 
 Septic::~Septic()

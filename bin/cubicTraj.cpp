@@ -9,7 +9,7 @@
 
 int main()
 {
-     std::unique_ptr<Cubic> q = std::make_unique<Cubic>(6, 8, 400);
+     std::unique_ptr<Quintic> q = std::make_unique<Quintic>(6, 8, 200);
 
      std::vector<double> fPos{0.5, 0.3, 0.9, 0.7, 8, 0.4};
 
@@ -34,7 +34,7 @@ int main()
      auto start = std::chrono::high_resolution_clock::now();
      // q->calcCoeffs(iPos, fPos,ivel,fvel,iacc,facc,ijerk,fjerk);
 
-     q->calcCoeffs(iPos,fPos, ivel, fvel);
+     q->calcCoeffs(iPos,fPos, ivel, fvel,iacc,facc);
 
      auto end = std::chrono::high_resolution_clock::now();
      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);

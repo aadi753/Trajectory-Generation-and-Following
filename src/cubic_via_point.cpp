@@ -9,7 +9,6 @@
  *
  */
 
-
 #include <cubic_via_point.h>
 
 /**
@@ -89,9 +88,9 @@ void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double>
 
      //* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
 
+     std::vector<double> result;
      for (size_t i = 0; i < _dof; i++)
      {
-          std::vector<double> result;
           result.resize(x.size(), 0.0);
 
           B[0] = init_pos[i];
@@ -115,6 +114,7 @@ void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double>
           // printVec(result);
 
           _finalConstMat.emplace_back(result);
+          result.clear();
 
      } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
 
@@ -173,11 +173,11 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
 }
 
 /*
-*@brief Destroy the Cubic Via Point::Cubic Via Point object
+ *@brief Destroy the Cubic Via Point::Cubic Via Point object
  *
  */
-            
-    CubicViaPoint::~CubicViaPoint()
+
+CubicViaPoint::~CubicViaPoint()
 {
      std::cout << "SAB KHATAM KARDIA BHAI :/ "
                << "\n";

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../include/parabolicBlend.h
+../include/cubic.h
 iostream
 -
 Eigen/Dense
@@ -16,8 +16,50 @@ Eigen/LU
 vector
 -
 
-/home/aadi/proj/Trajectory-Generation-and-Following/src/parabolicBlend.cpp
-parabolicBlend.h
+../include/cubic_via_point.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+
+../include/quintic.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+
+../include/septic.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+
+/home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp
+cubic.h
+-
+
+/home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp
+cubic_via_point.h
+-
+
+/home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp
+quintic.h
+-
+
+/home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp
+septic.h
 -
 
 /usr/include/eigen3/Eigen/Cholesky
