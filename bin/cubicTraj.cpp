@@ -9,7 +9,7 @@
 
 int main()
 {
-     std::unique_ptr<CubicViaPoint> q = std::make_unique<CubicViaPoint>(6, 2, 5, 200);
+     std::unique_ptr<Cubic> q = std::make_unique<Cubic>(6, 8, 400);
 
      std::vector<double> fPos{0.5, 0.3, 0.9, 0.7, 8, 0.4};
 
@@ -34,10 +34,10 @@ int main()
      auto start = std::chrono::high_resolution_clock::now();
      // q->calcCoeffs(iPos, fPos,ivel,fvel,iacc,facc,ijerk,fjerk);
 
-     q->calcCoeffs(iPos, viapt, fPos, ivel, fvel);
+     q->calcCoeffs(iPos,fPos, ivel, fvel);
 
      auto end = std::chrono::high_resolution_clock::now();
-     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
      std::cout << "TIME TAKEN IS: " << duration.count() << "ms " << std::endl;
 }

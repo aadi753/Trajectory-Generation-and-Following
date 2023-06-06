@@ -7,10 +7,8 @@
  *
  * @copyright Copyright (c) 2023
  *
- *
- *
- *
- * /
+ */
+
 
 #include <quintic.h>
 
@@ -21,6 +19,7 @@
  * @param finalTime 
  * @param waypoints 
  */
+
 Quintic::Quintic(int dof, int finalTime, int waypoints)
 {
      _waypts = waypoints;

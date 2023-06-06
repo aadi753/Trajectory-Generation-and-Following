@@ -171,10 +171,11 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
      // *print the matrices here to observe the values
      // printMat(_finalPath);
 }
-/**
+
+/*
 *@brief Destroy the Cubic Via Point::Cubic Via Point object
  *
- * /
+ */
             
     CubicViaPoint::~CubicViaPoint()
 {

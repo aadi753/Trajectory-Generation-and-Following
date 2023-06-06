@@ -18,7 +18,7 @@
  * @param finalTime total time of trajectory.
  * @param waypoints number of points to be generated in the trajectory.
  */
-ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints = 100)
+ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints)
 {
      _waypts = waypoints;
      _dof = dof;
@@ -40,7 +40,7 @@ ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints = 100)
  *
  * @note keep the values of blendVel and blendAccel equal, by default they are set to 0.25 don't change it if not sure how it affects the trajectory.
  */
-void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double blendVel = 0.25, double blendAccel = 0.25)
+void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double blendVel , double blendAccel)
 {
      init_pos.resize(_dof, 0.0);
      final_pos.resize(_dof, 0.0);
