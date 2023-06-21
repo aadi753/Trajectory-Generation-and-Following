@@ -15,6 +15,8 @@ Eigen/LU
 -
 vector
 -
+trajectories/trajectories.h
+-
 
 ../include/cubic_via_point.h
 iostream
@@ -24,6 +26,20 @@ Eigen/Dense
 Eigen/LU
 -
 vector
+-
+trajectories/trajectories.h
+-
+
+../include/parabolicBlend.h
+iostream
+-
+Eigen/Dense
+-
+Eigen/LU
+-
+vector
+-
+trajectories/trajectories.h
 -
 
 ../include/quintic.h
@@ -35,6 +51,8 @@ Eigen/LU
 -
 vector
 -
+trajectories/trajectories.h
+-
 
 ../include/septic.h
 iostream
@@ -45,6 +63,12 @@ Eigen/LU
 -
 vector
 -
+trajectories/trajectories.h
+-
+
+../include/trajectories/trajectories.h
+vector
+-
 
 /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp
 cubic.h
@@ -52,6 +76,10 @@ cubic.h
 
 /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp
 cubic_via_point.h
+-
+
+/home/aadi/proj/Trajectory-Generation-and-Following/src/parabolicBlend.cpp
+parabolicBlend.h
 -
 
 /home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp

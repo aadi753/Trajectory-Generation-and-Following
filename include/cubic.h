@@ -5,20 +5,21 @@
 #include <Eigen/Dense>
 #include <Eigen/LU>
 #include <vector>
+#include<trajectories/trajectories.h>
 
-class Cubic
+class Cubic : public Trajectories
 {
 
 public:
-     // Constructor 
+     // Constructor
      Cubic(int dof, int finalTime, int waypoints);
 
      // function to calculate the coefficients of the cubic polynomial
-     void calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel);
+     void calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel = {}, std::vector<double> final_vel = {});
 
      // function that generates the total path and velocities for the no. of DOF.
      void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime);
-     
+
      // helper functions to print the vectors and matrices.
      void printVec(std::vector<double> input);
      void printMat(std::vector<std::vector<double>> input);
@@ -30,11 +31,13 @@ public:
      }
      std::vector<std::vector<double>> &getVel() { return std::ref(_finalVel); }
 
+     void findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint = {}, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
+
      ~Cubic();
 
 private:
      int _dof;
-     int _waypts; // no. of waypoints
+     int _waypts;       // no. of waypoints
      double _finalTime; // total time of trajectory
 
      std::vector<std::vector<double>> _finalPath;

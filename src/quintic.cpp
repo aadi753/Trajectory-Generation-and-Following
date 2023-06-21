@@ -21,6 +21,7 @@
 
 Quintic::Quintic(int dof, int finalTime, int waypoints)
 {
+     std::cout << "QUINTIC TRAJECTORY !! \n\n";
      _waypts = waypoints;
      _dof = dof;
      _finalTime = finalTime;
@@ -28,7 +29,7 @@ Quintic::Quintic(int dof, int finalTime, int waypoints)
 
      tStep = tStep.LinSpaced(_waypts, 0, finalTime);
      _timeStep = tStep;
-     std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
+     // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
 void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
@@ -92,8 +93,8 @@ void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final
                result[i] = x[i];
           }
 
-          std::cout << "values of constants: "
-                    << "\n";
+          // std::cout << "values of constants: "
+          //           << "\n";
 
           // printVec(result);
           _finalConstMat.emplace_back(result);
@@ -143,13 +144,18 @@ void Quintic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat,
           jointVelVec.clear();
           jointAccelVec.clear();
      }
-     printMat(_finalPath);
+     // printMat(_finalPath);
 }
 
 Quintic::~Quintic()
 {
      std::cout << "SAB KHATAM KARDIA BHAI :/ "
                << "\n";
+}
+
+void Quintic::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+{
+     Quintic::calcCoeffs(init_pos, final_pos, init_vel, final_vel,init_accel,final_accel);
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVED LATER :)

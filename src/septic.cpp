@@ -2,6 +2,7 @@
 
 Septic::Septic(int dof, int finalTime, int waypoints)
 {
+     std::cout << "SEPTIC TRAJECTORY !! \n\n";
      _waypts = waypoints;
      _dof = dof;
      _finalTime = finalTime;
@@ -155,6 +156,11 @@ Septic::~Septic()
 {
      std::cout << "SAB KHATAM KARDIA BHAI :/ "
                << "\n";
+}
+
+void Septic::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+{
+     Septic::calcCoeffs(init_pos, final_pos, init_vel, final_vel, init_accel, final_accel);
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVED LATER :)

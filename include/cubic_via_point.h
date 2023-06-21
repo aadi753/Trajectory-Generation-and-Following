@@ -5,8 +5,10 @@
 #include <Eigen/Dense>
 #include <Eigen/LU>
 #include <vector>
+#include<trajectories/trajectories.h>
 
-class CubicViaPoint
+
+class CubicViaPoint:public Trajectories
 {
 
 public:
@@ -14,7 +16,7 @@ public:
      CubicViaPoint(int dof, int viaptTime, int finalTime, int waypoints);
      
      // function to calculate the coefficients of the cubic poly.
-     void calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel);
+     void calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel={}, std::vector<double> final_vel={});
      
      // function that generates the positions,velocities.
      void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime);
@@ -29,6 +31,8 @@ public:
           return std::ref(_finalPath);
      }
      std::vector<std::vector<double>> &getVel() { return std::ref(_finalVel); }
+
+     void findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint = {}, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
 
      ~CubicViaPoint();
 

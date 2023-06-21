@@ -20,6 +20,7 @@
  */
 ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints)
 {
+     std::cout << "PARABOLIC BLEND TRAJECTORY !! \n\n";
      _waypts = waypoints;
      _dof = dof;
      _finalTime = finalTime;
@@ -40,7 +41,7 @@ ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints)
  *
  * @note keep the values of blendVel and blendAccel equal, by default they are set to 0.25 don't change it if not sure how it affects the trajectory.
  */
-void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double blendVel , double blendAccel)
+void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double blendVel, double blendAccel)
 {
      init_pos.resize(_dof, 0.0);
      final_pos.resize(_dof, 0.0);
@@ -134,6 +135,11 @@ void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> init_fi
 
      //* print the matrices here to see the values.
      printMat(_finalPath);
+}
+
+void ParabolicBlend::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+{
+     ParabolicBlend::calcCoeffs(init_pos, final_pos);
 }
 
 /**

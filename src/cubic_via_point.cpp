@@ -22,6 +22,8 @@
  */
 CubicViaPoint::CubicViaPoint(int dof, int viaptTime, int finalTime, int waypoints)
 {
+     std::cout << "CUBIC VIA POINT TRAJECTORY !!\n\n";
+
      _waypts = waypoints;
      _dof = dof;
      _viaPtTime = viaptTime;
@@ -170,6 +172,11 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
      }
      // *print the matrices here to observe the values
      // printMat(_finalPath);
+}
+
+void CubicViaPoint::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+{
+     CubicViaPoint::calcCoeffs(init_pos, waypoint, final_pos, init_vel, final_vel);
 }
 
 /*

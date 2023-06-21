@@ -20,6 +20,7 @@
  */
 Cubic::Cubic(int dof, int finalTime, int waypoints)
 {
+     std::cout << "CUBIC TRAJECTORY !!!\n\n";
      _waypts = waypoints;
      _dof = dof;
      _finalTime = finalTime;
@@ -134,6 +135,11 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
      }
      // * print the matrices here to observe the values.
      // printMat(_finalPath);
+}
+
+void Cubic::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+{
+     Cubic::calcCoeffs(init_pos, final_pos, init_vel, final_vel);
 }
 
 /**

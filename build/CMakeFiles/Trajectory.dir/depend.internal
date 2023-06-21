@@ -3,6 +3,7 @@
 
 CMakeFiles/Trajectory.dir/src/cubic.cpp.o
  ../include/cubic.h
+ ../include/trajectories/trajectories.h
  /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core
@@ -213,6 +214,7 @@ CMakeFiles/Trajectory.dir/src/cubic.cpp.o
  /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
 CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o
  ../include/cubic_via_point.h
+ ../include/trajectories/trajectories.h
  /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core
@@ -423,6 +425,7 @@ CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o
  /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
 CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o
  ../include/parabolicBlend.h
+ ../include/trajectories/trajectories.h
  /home/aadi/proj/Trajectory-Generation-and-Following/src/parabolicBlend.cpp
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core
@@ -633,6 +636,7 @@ CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o
  /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
 CMakeFiles/Trajectory.dir/src/quintic.cpp.o
  ../include/quintic.h
+ ../include/trajectories/trajectories.h
  /home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core
@@ -843,6 +847,7 @@ CMakeFiles/Trajectory.dir/src/quintic.cpp.o
  /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
 CMakeFiles/Trajectory.dir/src/septic.cpp.o
  ../include/septic.h
+ ../include/trajectories/trajectories.h
  /home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core

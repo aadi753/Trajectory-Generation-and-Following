@@ -5,14 +5,15 @@
 #include <Eigen/Dense>
 #include <Eigen/LU>
 #include <vector>
+#include <trajectories/trajectories.h>
 
-class Septic
+class Septic:public Trajectories
 {
 
 public:
      Septic(int dof, int finalTime, int waypoints);
 
-     void calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel,std::vector<double>init_jerk,std::vector<double> final_jerk);
+     void calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel={}, std::vector<double> final_vel={}, std::vector<double> init_accel={}, std::vector<double> final_accel={},std::vector<double>init_jerk={},std::vector<double> final_jerk={});
 
      void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime);
 
@@ -21,6 +22,8 @@ public:
 
      std::vector<std::vector<double>> &getPath() { return std::ref(_finalPath); }
      std::vector<std::vector<double>> &getVel() { return std::ref(_finalVel); }
+
+     void findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint = {}, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
 
      ~Septic();
 
