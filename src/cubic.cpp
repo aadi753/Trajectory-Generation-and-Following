@@ -129,6 +129,7 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
           }
 
           // * print the vectors here to observe the values.
+          
           // printVec(jointVelVec);
           
           _finalPath.emplace_back(jointPosVec);
