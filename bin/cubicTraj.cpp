@@ -32,14 +32,14 @@ void printMat(std::vector<std::vector<double>> &input)
 
 int main()
 {
-     int selected_traj = trajectories_::septic;
+     int selected_traj = trajectories_::cubicViapoint;
      switch (selected_traj)
      {
      case trajectories_::cubic:
           traj = std::make_unique<Cubic>(6, 5, 200);
           break;
      case trajectories_::cubicViapoint:
-          traj = std::make_unique<CubicViaPoint>(6, 4,8, 200);
+          traj = std::make_unique<CubicViaPoint>(6, 2,5, 200);
           break;
      case trajectories_::parabolicBlend:
           traj = std::make_unique<ParabolicBlend>(6, 5, 200);
@@ -59,7 +59,7 @@ int main()
 
      // std::vector<double> fPos{0.9, 0.6, 0.6, 1.7, 0.8, 0.7};
 
-     std::vector<double> viapt{0.25, 0.15, 0.45, 0.35, 4, 0.2};
+     std::vector<double> viapt{0.25, 0.15, 0.25, 0.35, 4, 0.2};
 
      std::vector<double> iPos{0.0, 0.0, 0.0, 0.0, 1, 0.0};
 
@@ -76,11 +76,10 @@ int main()
      std::vector<double> fjerk{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
      auto start = std::chrono::high_resolution_clock::now();
-     // // q->calcCoeffs(iPos, fPos,ivel,fvel,iacc,facc,ijerk,fjerk);
 
      // q->calcCoeffs(iPos, fPos, ivel, fvel, iacc, facc);
 
-     traj->findCoeff(iPos,fPos);
+     traj->findCoeff(iPos, fPos, viapt);
      // printMat(traj->getPath());
      std::cout << "\n\n\n";
      // printMat(traj->getVel());

@@ -30,6 +30,7 @@ public:
           return std::ref(_finalPath);
      }
      std::vector<std::vector<double>> &getVel() { return std::ref(_finalVel); }
+     std::vector<std::vector<double>> &getAccel() { return std::ref(_finalAccel); }
 
      void findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint = {}, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
 

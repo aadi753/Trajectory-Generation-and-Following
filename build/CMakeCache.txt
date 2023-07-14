@@ -217,6 +217,9 @@ Trajectory_BINARY_DIR:STATIC=/home/aadi/proj/Trajectory-Generation-and-Following
 //Value Computed by CMake
 Trajectory_SOURCE_DIR:STATIC=/home/aadi/proj/Trajectory-Generation-and-Following
 
+//The directory containing a CMake configuration file for roscpp.
+roscpp_DIR:PATH=roscpp_DIR-NOTFOUND
+
 //Value Computed by CMake
 trajectory_BINARY_DIR:STATIC=/home/aadi/proj/Trajectory-Generation-and-Following/build
 

@@ -106,12 +106,14 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
      double t;
      std::vector<double> jointPosVec;
      std::vector<double> jointVelVec;
+     std::vector<double> jointAccelVec;
 
      for (size_t i = 0; i < linSpacedTime.size(); i++)
      {
           t = linSpacedTime[i]; // time goes from 0 to _finalTime.
           double posResult;
           double velResult;
+          double accelResult;
 
           for (auto ele : totalCoeffMat)
           {
@@ -119,22 +121,26 @@ void Cubic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
                posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t);
 
                velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t);
+               accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) + (ele[3] * 6 * t);
 
                jointPosVec.emplace_back(posResult);
                jointVelVec.emplace_back(velResult);
+               jointAccelVec.emplace_back(accelResult);
           }
 
           // * print the vectors here to observe the values.
           // printVec(jointVelVec);
-
+          
           _finalPath.emplace_back(jointPosVec);
           _finalVel.emplace_back(jointVelVec);
+          _finalAccel.emplace_back(jointAccelVec);
 
           jointPosVec.clear();
           jointVelVec.clear();
+          jointAccelVec.clear();
      }
      // * print the matrices here to observe the values.
-     // printMat(_finalPath);
+     // printMat(_finalAccel);
 }
 
 void Cubic::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
