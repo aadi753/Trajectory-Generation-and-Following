@@ -11,6 +11,13 @@ class Quintic:public Trajectories
 {
 
 public:
+     /**
+      * @brief Construct a new Quintic:: Quintic object
+      *
+      * @param dof
+      * @param finalTime
+      * @param waypoints
+      */
      Quintic(int dof, int finalTime, int waypoints);
 
      void calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel={}, std::vector<double> final_vel={}, std::vector<double> init_accel={}, std::vector<double> final_accel={});

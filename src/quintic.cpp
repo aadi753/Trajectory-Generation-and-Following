@@ -11,13 +11,7 @@
 
 #include <quintic.h>
 
-/**
- * @brief Construct a new Quintic:: Quintic object
- *
- * @param dof
- * @param finalTime
- * @param waypoints
- */
+
 
 Quintic::Quintic(int dof, int finalTime, int waypoints)
 {

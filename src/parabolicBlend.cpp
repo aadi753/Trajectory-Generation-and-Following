@@ -11,13 +11,7 @@
 
 #include <parabolicBlend.h>
 
-/**
- * @brief Construct a new Parabolic Blend:: Parabolic Blend object
- *
- * @param dof number of joints for which trajectory is to be generated.
- * @param finalTime total time of trajectory.
- * @param waypoints number of points to be generated in the trajectory.
- */
+
 ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints)
 {
      std::cout << "PARABOLIC BLEND TRAJECTORY !! \n\n";
@@ -31,16 +25,7 @@ ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints)
      std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
-/**
- * @brief calculates the blend time for the parabolic blend
- *
- * @param init_pos vector of intial positions of joints.
- * @param final_pos vector of final positions of joints.
- * @param blendVel velocity at blend point.
- * @param blendAccel acceleration at blend point.
- *
- * @note keep the values of blendVel and blendAccel equal, by default they are set to 0.25 don't change it if not sure how it affects the trajectory.
- */
+
 void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double blendVel, double blendAccel)
 {
      init_pos.resize(_dof, 0.0);
@@ -64,12 +49,7 @@ void ParabolicBlend::calcCoeffs(std::vector<double> init_pos, std::vector<double
      generatePathAndVel(_finalCoeffMat, _timeStep);
 }
 
-/**
- * @brief generates the final path ,velocities and accelerations
- *
- * @param init_final_posMat matrix having intial and final positions of the joints.
- * @param linSpacedTime vector of equally spaced time intervals.
- */
+
 void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> init_final_posMat, Eigen::VectorXd linSpacedTime)
 {
      double t;
