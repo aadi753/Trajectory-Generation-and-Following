@@ -3,14 +3,15 @@ cmake_minimum_required(VERSION 3.0)
 project(trajectory)
 
 find_package(Eigen3 REQUIRED)
+find_package(Python3 COMPONENTS Interpreter Development NumPy)
 
 include_directories(
      include
      ${EIGEN3_INCLUDE_DIRS}
-    
+    ${Python3_INCLUDE_DIRS}
 )
 
-add_library(Trajectory SHARED 
+add_library(Trajectory  
      src/cubic.cpp
      src/quintic.cpp
      src/parabolicBlend.cpp
@@ -20,4 +21,9 @@ add_library(Trajectory SHARED
 
 
 add_executable(trajTest bin/cubicTraj.cpp)
-target_link_libraries(trajTest PUBLIC Trajectory)
+target_link_libraries(trajTest 
+      Trajectory
+      plotter
+      ${Python3_LIBRARIES}
+     
+)

@@ -79,7 +79,8 @@ trajTest_EXTERNAL_OBJECTS =
 
 trajTest: CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o
 trajTest: CMakeFiles/trajTest.dir/build.make
-trajTest: libTrajectory.so
+trajTest: libTrajectory.a
+trajTest: /usr/lib/x86_64-linux-gnu/libpython3.8.so
 trajTest: CMakeFiles/trajTest.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable trajTest"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/trajTest.dir/link.txt --verbose=$(VERBOSE)

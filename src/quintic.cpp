@@ -128,7 +128,7 @@ void Quintic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat,
           }
 
           // printVec(jointPosVec);
-          // std::cout << jointVelVec[2] << "\n";
+          // std::cout << jointPosVec[2] << "\n";
 
           _finalPath.emplace_back(jointPosVec);
           _finalVel.emplace_back(jointVelVec);

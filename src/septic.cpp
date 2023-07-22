@@ -149,7 +149,7 @@ void Septic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, 
           jointAccelVec.clear();
           jointJerkVec.clear();
      }
-     printMat(_finalPath);
+     // printMat(_finalPath);
 }
 
 Septic::~Septic()

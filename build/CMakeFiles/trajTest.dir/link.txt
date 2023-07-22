@@ -1,1 +1,1 @@
-/usr/bin/g++  -g  -rdynamic CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o  -o trajTest  -Wl,-rpath,/home/aadi/proj/Trajectory-Generation-and-Following/build libTrajectory.so 
+/usr/bin/g++  -g  -rdynamic CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o  -o trajTest  libTrajectory.a -lplotter -lpython3.8 

@@ -6,7 +6,9 @@
 #include <memory>
 #include <chrono>
 #include <trajectories/trajectories.h>
+#include<matplotlibcpp.h>
 
+#define plt matplotlibcpp
 enum trajectories_
 {
      cubic,
@@ -30,6 +32,26 @@ void printMat(std::vector<std::vector<double>> &input)
      }
 }
 
+void plotVecFromMat(std::vector<std::vector<double>>&inp){
+     std::vector<double> printable;
+     printable.resize(200, 0.0);
+     for (size_t i = 0; i < 200; i++)
+     {
+          printable[i] = inp[i][2];
+     }
+     plt::plot(printable);
+     // plt::show();
+}
+
+ void getVecFromMat(std::vector<double> &inpt){
+     std::vector<double> printable;
+     for(auto &ele:inpt){
+          printable.emplace_back(ele);
+     }
+     plt::plot(printable);
+     plt::show();
+ }
+
 int main()
 {
      int selected_traj = trajectories_::cubicViapoint;
@@ -42,7 +64,7 @@ int main()
           traj = std::make_unique<CubicViaPoint>(6, 2,5, 200);
           break;
      case trajectories_::parabolicBlend:
-          traj = std::make_unique<ParabolicBlend>(6, 5, 200);
+          traj = std::make_unique<ParabolicBlend>(6, 3, 200);
           break;
      case trajectories_::quintic:
           traj = std::make_unique<Quintic>(6, 5, 200);
@@ -77,13 +99,15 @@ int main()
 
      auto start = std::chrono::high_resolution_clock::now();
 
-     // q->calcCoeffs(iPos, fPos, ivel, fvel, iacc, facc);
 
-     traj->findCoeff(iPos, fPos, viapt);
-     // printMat(traj->getPath());
-     std::cout << "\n\n\n";
-     // printMat(traj->getVel());
-
+     traj->findCoeff(iPos, fPos,viapt);
+     plotVecFromMat(traj->getPath());
+     plotVecFromMat(traj->getVel());
+     plotVecFromMat(traj->getAccel());
+    // // printMat(traj->getPath());
+    // // std::cout << "\n\n\n";
+     //// printMat(traj->getVel());
+     plt::show();
      auto end = std::chrono::high_resolution_clock::now();
      auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
      std::cout << "TIME TAKEN IS: " << duration.count() << "ms " << std::endl;

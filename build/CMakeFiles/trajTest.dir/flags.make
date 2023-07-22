@@ -6,5 +6,5 @@ CXX_FLAGS = -g
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/aadi/proj/Trajectory-Generation-and-Following/include -I/usr/include/eigen3 
+CXX_INCLUDES = -I/home/aadi/proj/Trajectory-Generation-and-Following/include -I/usr/include/eigen3 -I/usr/include/python3.8 
 

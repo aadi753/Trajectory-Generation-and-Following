@@ -22,7 +22,7 @@ ParabolicBlend::ParabolicBlend(int dof, int finalTime, int waypoints)
 
      tStep = tStep.LinSpaced(_waypts, 0, finalTime);
      _timeStep = tStep;
-     std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
+     // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
 
@@ -78,7 +78,7 @@ void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> init_fi
                {
                     s = ((0.5) * (_blendAccel * (_blendTime * _blendTime))) + (_blendVel * (t - _blendTime));
 
-                    s_dot = ele[2];
+                    s_dot = _blendVel;
 
                     s_ddot = 0;
                }
@@ -87,7 +87,7 @@ void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> init_fi
 
                     s = ((0.5) * _blendAccel * pow(_blendTime, 2)) + (_blendVel * (_finalTime - (2 * _blendTime))) + (_blendVel * (t - (_finalTime - _blendTime))) - (((0.5) * _blendAccel) * pow((t - (_finalTime - _blendTime)), 2));
 
-                    s_dot = ele[2] - _blendAccel * (t - (_finalTime - _blendTime));
+                    s_dot = _blendVel - _blendAccel * (t - (_finalTime - _blendTime));
 
                     s_ddot = -(_blendAccel);
                }
@@ -102,7 +102,7 @@ void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> init_fi
           }
 
           //* print the vectors here to see the values.
-          // std::cout << posVec[2] << "\n";
+          // std::cout << velVec[2] << "\n";
 
           _finalPath.emplace_back(posVec);
           _finalVel.emplace_back(velVec);
@@ -114,7 +114,7 @@ void ParabolicBlend::generatePathAndVel(std::vector<std::vector<double>> init_fi
      }
 
      //* print the matrices here to see the values.
-     printMat(_finalPath);
+     // printMat(_finalPath);
 }
 
 void ParabolicBlend::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
