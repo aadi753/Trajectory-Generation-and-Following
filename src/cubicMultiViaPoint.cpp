@@ -1,21 +1,9 @@
-/**
- * @file cubic_via_point.cpp
- * @author Aditya Singh (aditya.in753@gmail.com)
- * @brief
- * @version 0.1
- * @date 2023-05-30
- *
- * @copyright Copyright (c) 2023
- *
- */
+#include <cubicMultiViaPoint.h>
 
-#include <cubic_via_point.h>
-
-
-CubicViaPoint::CubicViaPoint(int dof, int viaptTime, int finalTime, int waypoints)
+CubicMultiViaPoint::CubicMultiViaPoint(int dof, int viaptTime, int finalTime, int waypoints,std::vector<std::vector<double>>waypointList)
 {
      std::cout << "CUBIC VIA POINT TRAJECTORY !!\n\n";
-
+     _waypointList = waypointList;
      _waypts = waypoints;
      _dof = dof;
      _viaPtTime = viaptTime;
@@ -27,9 +15,9 @@ CubicViaPoint::CubicViaPoint(int dof, int viaptTime, int finalTime, int waypoint
      // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
-
-void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel)
+void CubicMultiViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, bool lastSegment)
 {
+     // std::cout << "out of constructor and in calcCoeff!!!!!!!!!!!!! \n";
      init_vel.resize(_dof, 0.0);
      final_vel.resize(_dof, 0.0);
 
@@ -104,12 +92,14 @@ void CubicViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double>
 
      } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
 
-     generatePathAndVel(_finalConstMat, _timeStep);
+     generatePathAndVel(_finalConstMat, _timeStep, lastSegment);
+     _finalConstMat.clear();
 }
 
-
-void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)
+void CubicMultiViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime, bool lastSegment)
 {
+     // std::cout << "out of calcCOeff and in generate path vel !!!!!!!!!! \n";
+
      double t;
      std::vector<double> jointPosVec;
      std::vector<double> jointVelVec;
@@ -121,8 +111,9 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
           double posResult{0};
           double velResult{0};
           double accelResult{0};
-
-          for (auto ele : totalCoeffMat) 
+          if (t > _viaPtTime && !lastSegment)
+               continue;
+          for (auto ele : totalCoeffMat)
           {
                if (t < _viaPtTime) // first segment
                {
@@ -131,21 +122,23 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
                     velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t);
                     accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) + (ele[3] * 6 * t);
                }
-               else // second segment.
+               else
                {
-                    posResult = (ele[4] * 1) + (ele[5] * (t - _viaPtTime)) + (ele[6] * pow((t - _viaPtTime), 2)) + (ele[7] * pow((t - _viaPtTime), 3));
+                    if (lastSegment) // second segment.
+                    {
+                         posResult = (ele[4] * 1) + (ele[5] * (t - _viaPtTime)) + (ele[6] * pow((t - _viaPtTime), 2)) + (ele[7] * pow((t - _viaPtTime), 3));
 
-                    velResult = (ele[4] * 0) + (ele[5] * 1) + (ele[6] * 2 * (t - _viaPtTime)) + (ele[7] * 3 * pow((t - _viaPtTime), 2));
-                    accelResult = (ele[4] * 0) + (ele[5] * 0) + (ele[6] * 2) + (ele[7] * 6 * (t - _viaPtTime));
+                         velResult = (ele[4] * 0) + (ele[5] * 1) + (ele[6] * 2 * (t - _viaPtTime)) + (ele[7] * 3 * pow((t - _viaPtTime), 2));
+                         accelResult = (ele[4] * 0) + (ele[5] * 0) + (ele[6] * 2) + (ele[7] * 6 * (t - _viaPtTime));
+                    }
                }
-
                jointPosVec.emplace_back(posResult);
                jointVelVec.emplace_back(velResult);
                jointAccelVec.emplace_back(accelResult);
           }
 
           //* print the vectors here to observe the values.
-          //  printVec(jointVelVec);
+          //  printVec(jointPosVec);
           // std::cout << jointVelVec[2] << '\n';
 
           _finalPath.emplace_back(jointPosVec);
@@ -156,13 +149,35 @@ void CubicViaPoint::generatePathAndVel(std::vector<std::vector<double>> totalCoe
           jointVelVec.clear();
           jointAccelVec.clear();
      }
+
+     // printMat(_finalPath);
+     // _totalPath.insert(_totalPath.end(), _finalPath.begin(), _finalPath.end());
+     // _totalVel.insert(_totalVel.end(), _finalVel.begin(), _finalVel.end());
+     // _finalVel.clear();
+     // _finalPath.clear();
      // *print the matrices here to observe the values
+}
+
+void CubicMultiViaPoint::blendWaypoints(std::vector<std::vector<double>> wayptVector)
+{
+     // std::cout << "inside blenwaypts !!!!!!!!!! \n";
+     int size = wayptVector.size();
+     // std::cout << size << "\n";
+     for (size_t i = 0; i < wayptVector.size() - 3; i++)
+     {
+          calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2]);
+
+          // std::cout << i << "\n";
+     }
+
+     calcCoeffs(wayptVector[size - 3], wayptVector[size - 2], wayptVector[size - 1], {}, {}, true);
      // printMat(_finalPath);
 }
 
-void CubicViaPoint::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+void CubicMultiViaPoint::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
 {
-     CubicViaPoint::calcCoeffs(init_pos, waypoint, final_pos, init_vel, final_vel);
+     std::cout << "inside findCOeff !!!!!!!!!!! \n";
+     CubicMultiViaPoint::blendWaypoints(_waypointList);
 }
 
 /*
@@ -170,14 +185,14 @@ void CubicViaPoint::findCoeff(std::vector<double> init_pos, std::vector<double> 
  *
  */
 
-CubicViaPoint::~CubicViaPoint()
+CubicMultiViaPoint::~CubicMultiViaPoint()
 {
      std::cout << "SAB KHATAM KARDIA BHAI :/ "
                << "\n";
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVE FROM HERE LATER. :)
-void CubicViaPoint::printVec(std::vector<double> input)
+void CubicMultiViaPoint::printVec(std::vector<double> input)
 {
      for (size_t i = 0; i < input.size(); i++)
      {
@@ -186,7 +201,7 @@ void CubicViaPoint::printVec(std::vector<double> input)
      std::cout << "\n\n";
 }
 
-void CubicViaPoint::printMat(std::vector<std::vector<double>> input)
+void CubicMultiViaPoint::printMat(std::vector<std::vector<double>> input)
 {
      for (auto &ele : input)
      {
@@ -196,4 +211,5 @@ void CubicViaPoint::printMat(std::vector<std::vector<double>> input)
           }
           std::cout << "\n";
      }
+     std::cout << "\n";
 }

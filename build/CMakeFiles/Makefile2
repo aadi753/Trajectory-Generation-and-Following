@@ -44,10 +44,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aadi/proj/Trajectory-Generation-and-Following
+CMAKE_SOURCE_DIR = /home/aditya.singh/projects/Trajectory-Generation-and-Following
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aadi/proj/Trajectory-Generation-and-Following/build
+CMAKE_BINARY_DIR = /home/aditya.singh/projects/Trajectory-Generation-and-Following/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -76,14 +76,14 @@ clean: CMakeFiles/Trajectory.dir/clean
 CMakeFiles/trajTest.dir/all: CMakeFiles/Trajectory.dir/all
 	$(MAKE) -f CMakeFiles/trajTest.dir/build.make CMakeFiles/trajTest.dir/depend
 	$(MAKE) -f CMakeFiles/trajTest.dir/build.make CMakeFiles/trajTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=7,8 "Built target trajTest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=8,9 "Built target trajTest"
 .PHONY : CMakeFiles/trajTest.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/trajTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles 9
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/trajTest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles 0
 .PHONY : CMakeFiles/trajTest.dir/rule
 
 # Convenience name for target.
@@ -103,14 +103,14 @@ CMakeFiles/trajTest.dir/clean:
 CMakeFiles/Trajectory.dir/all:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/depend
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target Trajectory"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target Trajectory"
 .PHONY : CMakeFiles/Trajectory.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Trajectory.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles 7
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Trajectory.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles 0
 .PHONY : CMakeFiles/Trajectory.dir/rule
 
 # Convenience name for target.

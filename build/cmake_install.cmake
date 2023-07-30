@@ -1,4 +1,4 @@
-# Install script for directory: /home/aadi/proj/Trajectory-Generation-and-Following
+# Install script for directory: /home/aditya.singh/projects/Trajectory-Generation-and-Following
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
+    set(CMAKE_INSTALL_CONFIG_NAME "")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -37,6 +37,19 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/libTrajectory.a")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
+    "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/cubic.h"
+    "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/trajectories/trajectories.h"
+    "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/cubic_via_point.h"
+    "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/cubicMultiViaPoint.h"
+    )
+endif()
+
 if(CMAKE_INSTALL_COMPONENT)
   set(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")
 else()
@@ -45,5 +58,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/aadi/proj/Trajectory-Generation-and-Following/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

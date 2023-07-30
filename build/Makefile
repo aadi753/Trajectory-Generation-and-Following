@@ -48,13 +48,59 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aadi/proj/Trajectory-Generation-and-Following
+CMAKE_SOURCE_DIR = /home/aditya.singh/projects/Trajectory-Generation-and-Following
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aadi/proj/Trajectory-Generation-and-Following/build
+CMAKE_BINARY_DIR = /home/aditya.singh/projects/Trajectory-Generation-and-Following/build
 
 #=============================================================================
 # Targets provided globally by CMake.
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -80,9 +126,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -189,6 +235,33 @@ src/cubic.s: src/cubic.cpp.s
 src/cubic.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubic.cpp.s
 .PHONY : src/cubic.cpp.s
+
+src/cubicMultiViaPoint.o: src/cubicMultiViaPoint.cpp.o
+
+.PHONY : src/cubicMultiViaPoint.o
+
+# target to build an object file
+src/cubicMultiViaPoint.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o
+.PHONY : src/cubicMultiViaPoint.cpp.o
+
+src/cubicMultiViaPoint.i: src/cubicMultiViaPoint.cpp.i
+
+.PHONY : src/cubicMultiViaPoint.i
+
+# target to preprocess a source file
+src/cubicMultiViaPoint.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.i
+.PHONY : src/cubicMultiViaPoint.cpp.i
+
+src/cubicMultiViaPoint.s: src/cubicMultiViaPoint.cpp.s
+
+.PHONY : src/cubicMultiViaPoint.s
+
+# target to generate assembly for a file
+src/cubicMultiViaPoint.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.s
+.PHONY : src/cubicMultiViaPoint.cpp.s
 
 src/cubic_via_point.o: src/cubic_via_point.cpp.o
 
@@ -304,6 +377,10 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/strip"
+	@echo "... install/local"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... trajTest"
@@ -314,6 +391,9 @@ help:
 	@echo "... src/cubic.o"
 	@echo "... src/cubic.i"
 	@echo "... src/cubic.s"
+	@echo "... src/cubicMultiViaPoint.o"
+	@echo "... src/cubicMultiViaPoint.i"
+	@echo "... src/cubicMultiViaPoint.s"
 	@echo "... src/cubic_via_point.o"
 	@echo "... src/cubic_via_point.i"
 	@echo "... src/cubic_via_point.s"

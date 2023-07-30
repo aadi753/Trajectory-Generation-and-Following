@@ -1,1 +1,1 @@
-/usr/bin/g++  -g  -rdynamic CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o  -o trajTest  libTrajectory.a -lplotter -lpython3.8 
+/usr/bin/c++    -rdynamic CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o  -o trajTest  libTrajectory.a -lplotter -lpython3.8 

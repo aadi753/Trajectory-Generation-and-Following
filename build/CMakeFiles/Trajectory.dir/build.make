@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aadi/proj/Trajectory-Generation-and-Following
+CMAKE_SOURCE_DIR = /home/aditya.singh/projects/Trajectory-Generation-and-Following
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aadi/proj/Trajectory-Generation-and-Following/build
+CMAKE_BINARY_DIR = /home/aditya.singh/projects/Trajectory-Generation-and-Following/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Trajectory.dir/depend.make
@@ -59,68 +59,81 @@ include CMakeFiles/Trajectory.dir/flags.make
 
 CMakeFiles/Trajectory.dir/src/cubic.cpp.o: CMakeFiles/Trajectory.dir/flags.make
 CMakeFiles/Trajectory.dir/src/cubic.cpp.o: ../src/cubic.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Trajectory.dir/src/cubic.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/cubic.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Trajectory.dir/src/cubic.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/cubic.cpp.o -c /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic.cpp
 
 CMakeFiles/Trajectory.dir/src/cubic.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Trajectory.dir/src/cubic.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp > CMakeFiles/Trajectory.dir/src/cubic.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic.cpp > CMakeFiles/Trajectory.dir/src/cubic.cpp.i
 
 CMakeFiles/Trajectory.dir/src/cubic.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/cubic.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic.cpp -o CMakeFiles/Trajectory.dir/src/cubic.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic.cpp -o CMakeFiles/Trajectory.dir/src/cubic.cpp.s
 
 CMakeFiles/Trajectory.dir/src/quintic.cpp.o: CMakeFiles/Trajectory.dir/flags.make
 CMakeFiles/Trajectory.dir/src/quintic.cpp.o: ../src/quintic.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Trajectory.dir/src/quintic.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/quintic.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Trajectory.dir/src/quintic.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/quintic.cpp.o -c /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintic.cpp
 
 CMakeFiles/Trajectory.dir/src/quintic.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Trajectory.dir/src/quintic.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp > CMakeFiles/Trajectory.dir/src/quintic.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintic.cpp > CMakeFiles/Trajectory.dir/src/quintic.cpp.i
 
 CMakeFiles/Trajectory.dir/src/quintic.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/quintic.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aadi/proj/Trajectory-Generation-and-Following/src/quintic.cpp -o CMakeFiles/Trajectory.dir/src/quintic.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintic.cpp -o CMakeFiles/Trajectory.dir/src/quintic.cpp.s
 
 CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o: CMakeFiles/Trajectory.dir/flags.make
 CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o: ../src/parabolicBlend.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/parabolicBlend.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o -c /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/parabolicBlend.cpp
 
 CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aadi/proj/Trajectory-Generation-and-Following/src/parabolicBlend.cpp > CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/parabolicBlend.cpp > CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.i
 
 CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aadi/proj/Trajectory-Generation-and-Following/src/parabolicBlend.cpp -o CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/parabolicBlend.cpp -o CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.s
 
 CMakeFiles/Trajectory.dir/src/septic.cpp.o: CMakeFiles/Trajectory.dir/flags.make
 CMakeFiles/Trajectory.dir/src/septic.cpp.o: ../src/septic.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Trajectory.dir/src/septic.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/septic.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Trajectory.dir/src/septic.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/septic.cpp.o -c /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/septic.cpp
 
 CMakeFiles/Trajectory.dir/src/septic.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Trajectory.dir/src/septic.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp > CMakeFiles/Trajectory.dir/src/septic.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/septic.cpp > CMakeFiles/Trajectory.dir/src/septic.cpp.i
 
 CMakeFiles/Trajectory.dir/src/septic.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/septic.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aadi/proj/Trajectory-Generation-and-Following/src/septic.cpp -o CMakeFiles/Trajectory.dir/src/septic.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/septic.cpp -o CMakeFiles/Trajectory.dir/src/septic.cpp.s
 
 CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o: CMakeFiles/Trajectory.dir/flags.make
 CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o: ../src/cubic_via_point.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o -c /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o -c /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic_via_point.cpp
 
 CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp > CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic_via_point.cpp > CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.i
 
 CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aadi/proj/Trajectory-Generation-and-Following/src/cubic_via_point.cpp -o CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic_via_point.cpp -o CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.s
+
+CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o: CMakeFiles/Trajectory.dir/flags.make
+CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o: ../src/cubicMultiViaPoint.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o -c /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubicMultiViaPoint.cpp
+
+CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubicMultiViaPoint.cpp > CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.i
+
+CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubicMultiViaPoint.cpp -o CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.s
 
 # Object files for target Trajectory
 Trajectory_OBJECTS = \
@@ -128,7 +141,8 @@ Trajectory_OBJECTS = \
 "CMakeFiles/Trajectory.dir/src/quintic.cpp.o" \
 "CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o" \
 "CMakeFiles/Trajectory.dir/src/septic.cpp.o" \
-"CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o"
+"CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o" \
+"CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o"
 
 # External object files for target Trajectory
 Trajectory_EXTERNAL_OBJECTS =
@@ -138,9 +152,10 @@ libTrajectory.a: CMakeFiles/Trajectory.dir/src/quintic.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/src/septic.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o
+libTrajectory.a: CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/build.make
 libTrajectory.a: CMakeFiles/Trajectory.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libTrajectory.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libTrajectory.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/Trajectory.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Trajectory.dir/link.txt --verbose=$(VERBOSE)
 
@@ -154,6 +169,6 @@ CMakeFiles/Trajectory.dir/clean:
 .PHONY : CMakeFiles/Trajectory.dir/clean
 
 CMakeFiles/Trajectory.dir/depend:
-	cd /home/aadi/proj/Trajectory-Generation-and-Following/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aadi/proj/Trajectory-Generation-and-Following /home/aadi/proj/Trajectory-Generation-and-Following /home/aadi/proj/Trajectory-Generation-and-Following/build /home/aadi/proj/Trajectory-Generation-and-Following/build /home/aadi/proj/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/aditya.singh/projects/Trajectory-Generation-and-Following/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aditya.singh/projects/Trajectory-Generation-and-Following /home/aditya.singh/projects/Trajectory-Generation-and-Following /home/aditya.singh/projects/Trajectory-Generation-and-Following/build /home/aditya.singh/projects/Trajectory-Generation-and-Following/build /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Trajectory.dir/depend
 
