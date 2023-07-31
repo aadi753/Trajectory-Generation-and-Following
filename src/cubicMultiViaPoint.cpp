@@ -1,6 +1,6 @@
 #include <cubicMultiViaPoint.h>
 
-CubicMultiViaPoint::CubicMultiViaPoint(int dof, int viaptTime, int finalTime, int waypoints,std::vector<std::vector<double>>waypointList)
+CubicMultiViaPoint::CubicMultiViaPoint(int dof, int viaptTime, int finalTime, int waypoints, std::vector<std::vector<double>> waypointList)
 {
      std::cout << "CUBIC VIA POINT TRAJECTORY !!\n\n";
      _waypointList = waypointList;
@@ -160,23 +160,29 @@ void CubicMultiViaPoint::generatePathAndVel(std::vector<std::vector<double>> tot
 
 void CubicMultiViaPoint::blendWaypoints(std::vector<std::vector<double>> wayptVector)
 {
+     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {50, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
      // std::cout << "inside blenwaypts !!!!!!!!!! \n";
      int size = wayptVector.size();
      // std::cout << size << "\n";
      for (size_t i = 0; i < wayptVector.size() - 3; i++)
      {
+          if(i!=0){
+          calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2],_finalVel[_finalVel.size()-1]);
+
+          }
+          else
           calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2]);
 
           // std::cout << i << "\n";
      }
 
-     calcCoeffs(wayptVector[size - 3], wayptVector[size - 2], wayptVector[size - 1], {}, {}, true);
+     calcCoeffs(wayptVector[size - 3], wayptVector[size - 2], wayptVector[size - 1], _finalVel[_finalVel.size() - 1], {}, true);
      // printMat(_finalPath);
 }
 
 void CubicMultiViaPoint::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
 {
-     std::cout << "inside findCOeff !!!!!!!!!!! \n";
+     // std::cout << "inside findCOeff !!!!!!!!!!! \n";
      CubicMultiViaPoint::blendWaypoints(_waypointList);
 }
 

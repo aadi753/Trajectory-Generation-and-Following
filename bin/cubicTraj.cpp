@@ -10,7 +10,8 @@
 #include<matplotlibcpp.h>
 
 #define plt matplotlibcpp
-#define waypts 200
+#define waypts 400
+
 enum trajectories_
 {
      cubic,
@@ -57,8 +58,11 @@ void plotVecFromMat(std::vector<std::vector<double>>&inp){
 
 int main()
 {
-     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
-     std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 30, 0, 0, 0, 60}, {0, 40, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}};
+     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 10, 0, 0, 0, 0}, {0, 20, 0, 0, 0, 0}, {0, 40, 0, 0, 0, 0}, {0, 50, 0, 0, 0, 0} ,{0, 90, 0, 0, 27, 28}};
+     // std::vector<std::vector<double>> _waypointList = {0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {50, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
+     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
+
+     std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
 
      int selected_traj = trajectories_::cubicMultiViaPt;
      switch (selected_traj)
@@ -79,7 +83,7 @@ int main()
           traj = std::make_unique<Septic>(6, 5, waypts);
           break;
      case trajectories_::cubicMultiViaPt:
-          traj = std::make_unique<CubicMultiViaPoint>(6, 5, 7, waypts,_waypointList);
+          traj = std::make_unique<CubicMultiViaPoint>(6, 7, 15, waypts,_waypointList);
           break;
      
           std::cout << "PLEASE CHOOSE A VALID TRAJECTORY TYPE FROM THE ABOVE LIST!!" << std::endl;
