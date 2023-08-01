@@ -3,6 +3,7 @@
 #include<cubicMultiViaPoint.h>
 #include <quintic.h>
 #include <parabolicBlend.h>
+#include<quinticMulitViapt.h>
 #include <septic.h>
 #include <memory>
 #include <chrono>
@@ -19,6 +20,7 @@ enum trajectories_
      cubicMultiViaPt,
      parabolicBlend,
      quintic,
+     quinticMulipt,
      septic
 };
 
@@ -57,14 +59,17 @@ void plotVecFromMat(std::vector<std::vector<double>>&inp){
  }
 
 int main()
-{
-     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 10, 0, 0, 0, 0}, {0, 20, 0, 0, 0, 0}, {0, 40, 0, 0, 0, 0}, {0, 50, 0, 0, 0, 0} ,{0, 90, 0, 0, 27, 28}};
-     // std::vector<std::vector<double>> _waypointList = {0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {50, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
+{ 
+     // 15,20,-148,-159,150,152
+     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 15, 0, 0, 0, 0}, {0, 20, 0, 0, 0, 0}, {0, -148, 0, 0, 0, 0}, {0, -159, 0, 0, 0, 0} ,{0,-150, 0, 0, 27, 28}};
+     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {0, 0, 0, 0, 0, 0}};
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
 
      std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
 
-     int selected_traj = trajectories_::cubicMultiViaPt;
+     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 40, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}, {0, 110, 0, 0, 0, 0}, {0, 50, 0, 0, 27, 28}};
+
+     int selected_traj = trajectories_::quinticMulipt;
      switch (selected_traj)
      {
      case trajectories_::cubic:
@@ -83,9 +88,12 @@ int main()
           traj = std::make_unique<Septic>(6, 5, waypts);
           break;
      case trajectories_::cubicMultiViaPt:
-          traj = std::make_unique<CubicMultiViaPoint>(6, 7, 15, waypts,_waypointList);
+          traj = std::make_unique<CubicMultiViaPoint>(6, 7, 14, 200,_waypointList);
           break;
-     
+     case trajectories_::quinticMulipt:
+          traj = std::make_unique<QuinticMultiViapt>(6, 7, 14, waypts, _waypointList);
+          break;
+     default:
           std::cout << "PLEASE CHOOSE A VALID TRAJECTORY TYPE FROM THE ABOVE LIST!!" << std::endl;
           break;
      }

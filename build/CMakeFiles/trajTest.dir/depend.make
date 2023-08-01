@@ -6,6 +6,7 @@ CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/cubicMultiViaPoint.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/cubic_via_point.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/parabolicBlend.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/quintic.h
+CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/quinticMulitViapt.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/septic.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/trajectories/trajectories.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../bin/cubicTraj.cpp

@@ -344,6 +344,33 @@ src/quintic.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintic.cpp.s
 .PHONY : src/quintic.cpp.s
 
+src/quinticMulitViapt.o: src/quinticMulitViapt.cpp.o
+
+.PHONY : src/quinticMulitViapt.o
+
+# target to build an object file
+src/quinticMulitViapt.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.o
+.PHONY : src/quinticMulitViapt.cpp.o
+
+src/quinticMulitViapt.i: src/quinticMulitViapt.cpp.i
+
+.PHONY : src/quinticMulitViapt.i
+
+# target to preprocess a source file
+src/quinticMulitViapt.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.i
+.PHONY : src/quinticMulitViapt.cpp.i
+
+src/quinticMulitViapt.s: src/quinticMulitViapt.cpp.s
+
+.PHONY : src/quinticMulitViapt.s
+
+# target to generate assembly for a file
+src/quinticMulitViapt.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.s
+.PHONY : src/quinticMulitViapt.cpp.s
+
 src/septic.o: src/septic.cpp.o
 
 .PHONY : src/septic.o
@@ -403,6 +430,9 @@ help:
 	@echo "... src/quintic.o"
 	@echo "... src/quintic.i"
 	@echo "... src/quintic.s"
+	@echo "... src/quinticMulitViapt.o"
+	@echo "... src/quinticMulitViapt.i"
+	@echo "... src/quinticMulitViapt.s"
 	@echo "... src/septic.o"
 	@echo "... src/septic.i"
 	@echo "... src/septic.s"

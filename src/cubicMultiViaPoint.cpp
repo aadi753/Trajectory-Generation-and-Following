@@ -15,11 +15,12 @@ CubicMultiViaPoint::CubicMultiViaPoint(int dof, int viaptTime, int finalTime, in
      // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
 }
 
-void CubicMultiViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, bool lastSegment)
+void CubicMultiViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, bool lastSegment, std::vector<double> init_accel)
 {
      // std::cout << "out of constructor and in calcCoeff!!!!!!!!!!!!! \n";
      init_vel.resize(_dof, 0.0);
      final_vel.resize(_dof, 0.0);
+     init_accel.resize(_dof, 0.0);
 
      // Ax=B (statespace format).
      Eigen::MatrixXd A = Eigen::MatrixXd::Zero(8, 8);     // matrix having coeff of the constants in cubic eqn.
@@ -52,7 +53,7 @@ void CubicMultiViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<do
      A(6, 2) = 2 * (_viaPtTime);
      A(6, 3) = 3 * pow(_viaPtTime, 2);
      A(6, 5) = -1.0;
-
+     
      A(7, 2) = 2.0;
      A(7, 3) = 6 * (_viaPtTime);
      A(7, 6) = -2.0;
@@ -75,7 +76,6 @@ void CubicMultiViaPoint::calcCoeffs(std::vector<double> init_pos, std::vector<do
           B[5] = final_vel[i];
           B[6] = 0.0;
           B[7] = 0.0;
-
           x = A_INV * B; // * calculating the coefficients of cubic polynomial for all joints
 
           // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
@@ -115,7 +115,7 @@ void CubicMultiViaPoint::generatePathAndVel(std::vector<std::vector<double>> tot
                continue;
           for (auto ele : totalCoeffMat)
           {
-               if (t < _viaPtTime) // first segment
+               if (t <= _viaPtTime) // first segment
                {
                     posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t);
 
@@ -150,11 +150,7 @@ void CubicMultiViaPoint::generatePathAndVel(std::vector<std::vector<double>> tot
           jointAccelVec.clear();
      }
 
-     // printMat(_finalPath);
-     // _totalPath.insert(_totalPath.end(), _finalPath.begin(), _finalPath.end());
-     // _totalVel.insert(_totalVel.end(), _finalVel.begin(), _finalVel.end());
-     // _finalVel.clear();
-     // _finalPath.clear();
+  
      // *print the matrices here to observe the values
 }
 
@@ -167,8 +163,7 @@ void CubicMultiViaPoint::blendWaypoints(std::vector<std::vector<double>> wayptVe
      for (size_t i = 0; i < wayptVector.size() - 3; i++)
      {
           if(i!=0){
-          calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2],_finalVel[_finalVel.size()-1]);
-
+               calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2], _finalVel[_finalVel.size() - 1]);
           }
           else
           calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2]);

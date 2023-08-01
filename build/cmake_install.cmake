@@ -47,6 +47,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/trajectories/trajectories.h"
     "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/cubic_via_point.h"
     "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/cubicMultiViaPoint.h"
+    "/home/aditya.singh/projects/Trajectory-Generation-and-Following/include/quinticMulitViapt.h"
     )
 endif()
 

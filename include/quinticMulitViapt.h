@@ -1,5 +1,5 @@
-#ifndef DD68898C_23D0_4EB1_B3B4_5E0A137F378D
-#define DD68898C_23D0_4EB1_B3B4_5E0A137F378D
+#ifndef B0B7C493_9822_413C_9647_41A05E2EF5CD
+#define B0B7C493_9822_413C_9647_41A05E2EF5CD
 
 #include <iostream>
 #include <Eigen/Dense>
@@ -7,7 +7,7 @@
 #include <vector>
 #include <trajectories.h>
 
-class CubicMultiViaPoint : public Trajectories
+class QuinticMultiViapt : public Trajectories
 {
 
 public:
@@ -21,7 +21,7 @@ public:
      * @param finalTime  total time of trajectory
      * @param waypoints  no. of waypoints in the trajectory
      */
-     CubicMultiViaPoint(int dof, int viaptTime, int finalTime, int waypoints,std::vector<std::vector<double>>waypointList);
+     QuinticMultiViapt(int dof, int viaptTime, int finalTime, int waypoints, std::vector<std::vector<double>> waypointList);
 
      // function to calculate the coefficients of the cubic poly.
      /**
@@ -33,7 +33,7 @@ public:
       * @param init_vel  a vector of inital joint velocities.
       * @param final_vel a vector of final joint velocities.
       */
-     void calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, bool lastSegment = false, std::vector<double> init_accel = {});
+     void calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, bool lastSegment = false, std::vector<double> init_accel = {},std::vector<double>final_accel={});
 
      // function that generates the positions,velocities.
      /**
@@ -42,7 +42,7 @@ public:
       * @param totalCoeffMat matrix of coefficients of the cubic poly for all DOF. size should be 8xDOF(m x n).
       * @param linSpacedTime vector of equally spaced time intervals.
       */
-     void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime,bool lastSegment);
+     void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime, bool lastSegment);
 
      void blendWaypoints(std::vector<std::vector<double>> wayptVector); // takes the vector of waypoints and calls other functions to generate a blended trajectory through all the pts
 
@@ -58,7 +58,7 @@ public:
      // abstarct class function
      void findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint = {}, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
 
-     ~CubicMultiViaPoint();
+     ~QuinticMultiViapt();
 
 private:
      int _dof;    // no. of joints
@@ -78,4 +78,4 @@ private:
      Eigen::VectorXd _timeStep; // equally spaced time intervals.
 };
 
-#endif /* DD68898C_23D0_4EB1_B3B4_5E0A137F378D */
+#endif /* B0B7C493_9822_413C_9647_41A05E2EF5CD */
