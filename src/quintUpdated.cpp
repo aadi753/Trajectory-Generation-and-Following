@@ -1,5 +1,7 @@
+#include<quintUpdated.h>
+
 /**
- * @file quintic.cpp
+ * @file quint.cpp
  * @author Aditya Singh (aditya.in753@gmail.com)
  * @brief
  * @version 0.1
@@ -9,24 +11,17 @@
  *
  */
 
-#include <quintic.h>
 
-
-
-Quintic::Quintic(int dof, int finalTime, int waypoints)
+quint::quint(int dof, int waypoints)
 {
-     std::cout << "QUINTIC TRAJECTORY !! \n\n";
+     // std::cout << "quint TRAJECTORY !! \n\n";
      _waypts = waypoints;
      _dof = dof;
-     _finalTime = finalTime;
-     Eigen::VectorXd tStep = Eigen::VectorXd::Zero(_waypts);
 
-     tStep = tStep.LinSpaced(_waypts, 0, finalTime);
-     _timeStep = tStep;
-     // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
+     
 }
 
-void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+void quint::calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,double maxVel,double maxAcc ,std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
 {
      init_vel.resize(_dof, 0.0);
      final_vel.resize(_dof, 0.0);
@@ -34,13 +29,36 @@ void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final
      init_accel.resize(_dof, 0.0);
      final_accel.resize(_dof, 0.0);
 
+     std::vector<double> diffVec;
+     for (size_t i = 0; i < finalpos.size(); i++)
+     {
+          diffVec.emplace_back(abs(finalpos[i] - initpos[i]));
+     }
+
+     double distance = *std::max_element(diffVec.begin(), diffVec.end());
+
+     std::cout << distance << "\n\n";
+
+     double t1 = 15 * (distance) / (8 * maxVel);
+     double t2 = sqrt(((10 * sqrt(3)) * distance) / (3 * maxAcc));
+
+     std::cout << t1 << " " << t2 << "\n";
+
+     _finalTime = std::max(t1, t2);
+     std::cout << _finalTime << "\n\n";
+
+     Eigen::VectorXd tStep = Eigen::VectorXd::Zero(_waypts);
+     tStep = tStep.LinSpaced(_waypts, 0, _finalTime);
+     _timeStep = tStep;
+
+
      //* Ax=B
-     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(6, 6);     // matrix having coeff of the constants in quintic eqn.
+     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(6, 6);     // matrix having coeff of the constants in quint eqn.
      Eigen::MatrixXd A_INV = Eigen::MatrixXd::Zero(6, 6); // inveresee of the above matrix.
      Eigen::VectorXd x = Eigen::VectorXd::Zero(6);        // the inital and final condition vector having inital and final position and velocity.
      Eigen::VectorXd B = Eigen::VectorXd::Zero(6);        // the vector having the constant to be found out.
 
-     //* filling the matrix having coeff of quintic eqn.
+     //* filling the matrix having coeff of quint eqn.
      A(0, 0) = 1.0;
      A(1, 1) = 1.0;
      A(2, 2) = 2.0;
@@ -70,10 +88,10 @@ void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final
      {
           result.resize(x.size(), 0.0);
 
-          B[0] = init_pos[i];
+          B[0] = initpos[i];
           B[1] = init_vel[i];
           B[2] = init_accel[i];
-          B[3] = final_pos[i];
+          B[3] = finalpos[i];
           B[4] = final_vel[i];
           B[5] = final_accel[i];
 
@@ -99,8 +117,16 @@ void Quintic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final
      generatePathAndVel(_finalConstMat, _timeStep);
 }
 
-void Quintic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)
-{
+
+
+void quint::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)
+{    
+     if(_finalPath.size()!=0){
+          _finalAccel.clear();
+          _finalPath.clear();
+          _finalVel.clear();
+     }
+
      double t;
      std::vector<double> jointPosVec;
      std::vector<double> jointVelVec;
@@ -141,19 +167,19 @@ void Quintic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat,
      // printMat(_finalPath);
 }
 
-Quintic::~Quintic()
+quint::~quint()
 {
      // std::cout << "SAB KHATAM KARDIA BHAI :/ "
      //           << "\n";
 }
 
-void Quintic::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+void quint::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
 {
-     Quintic::calcCoeffs(init_pos, final_pos, init_vel, final_vel,init_accel,final_accel);
+     quint::calcCoeffs(init_pos,final_pos,60,60); //! change this implementation later 
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVED LATER :)
-void Quintic::printVec(std::vector<double> input)
+void quint::printVec(std::vector<double> input)
 {
      for (size_t i = 0; i < input.size(); i++)
      {
@@ -162,7 +188,7 @@ void Quintic::printVec(std::vector<double> input)
      std::cout << "\n\n";
 }
 
-void Quintic::printMat(std::vector<std::vector<double>> input)
+void quint::printMat(std::vector<std::vector<double>> input)
 {
      for (auto &ele : input)
      {

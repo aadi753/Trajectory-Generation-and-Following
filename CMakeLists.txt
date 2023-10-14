@@ -19,6 +19,7 @@ add_library(Trajectory
      src/cubic_via_point.cpp
      src/cubicMultiViaPoint.cpp
      src/quinticMulitViapt.cpp
+     src/quintUpdated.cpp
 )
 
 add_executable(trajTest bin/cubicTraj.cpp)
@@ -34,5 +35,6 @@ install(FILES include/cubic.h
                include/cubic_via_point.h
                include/cubicMultiViaPoint.h
                include/quinticMulitViapt.h
+               include/quintic.h
      DESTINATION include
 )

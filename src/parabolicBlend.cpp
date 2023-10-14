@@ -128,8 +128,8 @@ void ParabolicBlend::findCoeff(std::vector<double> init_pos, std::vector<double>
  */
 ParabolicBlend::~ParabolicBlend()
 {
-     std::cout << "SAB KHATAM KARDIA BHAI :/ "
-               << "\n";
+     // std::cout << "SAB KHATAM KARDIA BHAI :/ "
+     //           << "\n";
 }
 
 void ParabolicBlend::printVec(std::vector<double> input)

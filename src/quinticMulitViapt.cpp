@@ -2,7 +2,7 @@
 
 QuinticMultiViapt::QuinticMultiViapt(int dof, int viaptTime, int finalTime, int waypoints, std::vector<std::vector<double>> waypointList)
 {
-     std::cout << "CUBIC VIA POINT TRAJECTORY !!\n\n";
+     std::cout << "QUINTIC MULTI VIA POINT TRAJECTORY !!\n\n";
      _waypointList = waypointList;
      _waypts = waypoints;
      _dof = dof;
@@ -82,7 +82,7 @@ void QuinticMultiViapt::calcCoeffs(std::vector<double> init_pos, std::vector<dou
      A(11, 4) = 24 * _viaPtTime;
      A(11, 5) = 60 * pow((_viaPtTime), 2);
      A(11, 9) = -6.0;
-     
+
      // std::cout << A << "\n\n";
      //*calculating inverse of the above matrix */
      A_INV = A.inverse();
@@ -105,10 +105,8 @@ void QuinticMultiViapt::calcCoeffs(std::vector<double> init_pos, std::vector<dou
           B[8] = final_accel[i];
           B[9] = 0.0;
           B[10] = 0.0;
-          B[11] = 0.0; // initial jerk for 2nd segment
-          std::cout << B << "\n\n";
+          B[11] = 0.0;   // initial jerk for 2nd segment
           x = A_INV * B; // * calculating the coefficients of cubic polynomial for all joints
-          // std::cout << x << "\n";
 
           // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
 
@@ -147,9 +145,9 @@ void QuinticMultiViapt::generatePathAndVel(std::vector<std::vector<double>> tota
                continue;
           for (auto ele : totalCoeffMat)
           {
-               if (t <=_viaPtTime) // first segment
+               if (t <= _viaPtTime) // first segment
                {
-                    posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t) + (ele[4] * t * t * t * t ) + (ele[5] * t * t * t * t * t);
+                    posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t) + (ele[4] * t * t * t * t) + (ele[5] * t * t * t * t * t);
 
                     velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t) + (ele[4] * 4 * t * t * t) + (ele[5] * 5 * t * t * t * t);
 
@@ -173,7 +171,7 @@ void QuinticMultiViapt::generatePathAndVel(std::vector<std::vector<double>> tota
 
           //* print the vectors here to observe the values.
           //  printVec(jointPosVec);
-          // std::cout << jointVelVec[2] << '\n';
+          std::cout << jointPosVec[1] << '\n';
 
           _finalPath.emplace_back(jointPosVec);
           _finalVel.emplace_back(jointVelVec);
@@ -189,23 +187,28 @@ void QuinticMultiViapt::generatePathAndVel(std::vector<std::vector<double>> tota
 
 void QuinticMultiViapt::blendWaypoints(std::vector<std::vector<double>> wayptVector)
 {
-     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {50, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
-     // std::cout << "inside blenwaypts !!!!!!!!!! \n";
+    
      int size = wayptVector.size();
-     // std::cout << size << "\n";
-     for (size_t i = 0; i < wayptVector.size() - 3; i++)
+     if (size == 3)
      {
-          if (i != 0)
-          {
-               calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2], _finalVel[_finalVel.size() - 1],{},false,_finalAccel[_finalAccel.size()-1],{});
-          }
-          else
-               calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2]);
-
-          // std::cout << i << "\n";
+          calcCoeffs(wayptVector[0], wayptVector[1], wayptVector[2],{},{},true);
      }
+     else
+     {
+          for (size_t i = 0; i < wayptVector.size() - 3; i++)
+          {
+               if (i != 0)
+               {
+                    calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2], _finalVel[_finalVel.size() - 1], {}, false, _finalAccel[_finalAccel.size() - 1], {});
+               }
+               else
+                    calcCoeffs(wayptVector[i], wayptVector[i + 1], wayptVector[i + 2]);
 
-     calcCoeffs(wayptVector[size - 3], wayptVector[size - 2], wayptVector[size - 1], _finalVel[_finalVel.size() - 1], {}, true, _finalAccel[_finalAccel.size() - 1], {});
+               // std::cout << i << "\n";
+          }
+
+          calcCoeffs(wayptVector[size - 3], wayptVector[size - 2], wayptVector[size - 1], _finalVel[_finalVel.size() - 1], {}, true, _finalAccel[_finalAccel.size() - 1], {});
+     }
 }
 
 void QuinticMultiViapt::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
@@ -221,8 +224,7 @@ void QuinticMultiViapt::findCoeff(std::vector<double> init_pos, std::vector<doub
 
 QuinticMultiViapt::~QuinticMultiViapt()
 {
-     std::cout << "SAB KHATAM KARDIA BHAI :/ "
-               << "\n";
+     // std::cout << "SAB KHATAM KARDIA BHAI :/ "<< "\n";
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVE FROM HERE LATER. :)

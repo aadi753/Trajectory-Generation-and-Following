@@ -188,8 +188,8 @@ void CubicMultiViaPoint::findCoeff(std::vector<double> init_pos, std::vector<dou
 
 CubicMultiViaPoint::~CubicMultiViaPoint()
 {
-     std::cout << "SAB KHATAM KARDIA BHAI :/ "
-               << "\n";
+     // std::cout << "SAB KHATAM KARDIA BHAI :/ "
+     //           << "\n";
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVE FROM HERE LATER. :)

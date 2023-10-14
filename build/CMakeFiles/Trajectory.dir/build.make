@@ -148,6 +148,19 @@ CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quinticMulitViapt.cpp -o CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.s
 
+CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o: CMakeFiles/Trajectory.dir/flags.make
+CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o: ../src/quintUpdated.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o -c /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintUpdated.cpp
+
+CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintUpdated.cpp > CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.i
+
+CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintUpdated.cpp -o CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.s
+
 # Object files for target Trajectory
 Trajectory_OBJECTS = \
 "CMakeFiles/Trajectory.dir/src/cubic.cpp.o" \
@@ -156,7 +169,8 @@ Trajectory_OBJECTS = \
 "CMakeFiles/Trajectory.dir/src/septic.cpp.o" \
 "CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o" \
 "CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o" \
-"CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.o"
+"CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.o" \
+"CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o"
 
 # External object files for target Trajectory
 Trajectory_EXTERNAL_OBJECTS =
@@ -168,9 +182,10 @@ libTrajectory.a: CMakeFiles/Trajectory.dir/src/septic.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.o
+libTrajectory.a: CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o
 libTrajectory.a: CMakeFiles/Trajectory.dir/build.make
 libTrajectory.a: CMakeFiles/Trajectory.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX static library libTrajectory.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library libTrajectory.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/Trajectory.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Trajectory.dir/link.txt --verbose=$(VERBOSE)
 

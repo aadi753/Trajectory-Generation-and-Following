@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubicMultiViaPoint.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic_via_point.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/parabolicBlend.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.o"
+  "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintUpdated.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintic.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/quintic.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quinticMulitViapt.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/septic.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/septic.cpp.o"

@@ -1,30 +1,33 @@
 #pragma once
+#pragma once
 
 #include <iostream>
 #include <Eigen/Dense>
 #include <Eigen/LU>
 #include <vector>
 #include <trajectories.h>
+#include <bits/stdc++.h>
 
-class Quintic:public Trajectories
+class quint : public Trajectories
 {
 
 public:
      /**
-      * @brief Construct a new Quintic:: Quintic object
+      * @brief Construct a new quint:: quint object
       *
       * @param dof
       * @param finalTime
       * @param waypoints
       */
-     Quintic(int dof, int finalTime, int waypoints);
+     quint(int dof, int waypoints);
 
-     void calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel={}, std::vector<double> final_vel={}, std::vector<double> init_accel={}, std::vector<double> final_accel={});
+     void calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,double maxVel,double maxAcc ,std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
 
      void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime);
 
      void printVec(std::vector<double> input);
      void printMat(std::vector<std::vector<double>> input);
+     double getTime() { return _finalTime; }
 
      std::vector<std::vector<double>> &getPath() { return std::ref(_finalPath); }
      std::vector<std::vector<double>> &getVel() { return std::ref(_finalVel); }
@@ -32,12 +35,14 @@ public:
 
      void findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint = {}, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
 
-     ~Quintic();
+     ~quint();
 
 private:
      int _dof;
      int _waypts;
      double _finalTime;
+
+     std::vector<double> _initpos, _finalpos;
 
      std::vector<std::vector<double>> _finalPath;
      std::vector<std::vector<double>> _finalVel;
@@ -53,5 +58,3 @@ private:
 };
 
 // #endif /* ADA958D4_E490_42C2_B895_E8BF9AB6FF71 */
-
-

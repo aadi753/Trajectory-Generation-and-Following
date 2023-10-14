@@ -317,6 +317,33 @@ src/parabolicBlend.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/parabolicBlend.cpp.s
 .PHONY : src/parabolicBlend.cpp.s
 
+src/quintUpdated.o: src/quintUpdated.cpp.o
+
+.PHONY : src/quintUpdated.o
+
+# target to build an object file
+src/quintUpdated.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.o
+.PHONY : src/quintUpdated.cpp.o
+
+src/quintUpdated.i: src/quintUpdated.cpp.i
+
+.PHONY : src/quintUpdated.i
+
+# target to preprocess a source file
+src/quintUpdated.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.i
+.PHONY : src/quintUpdated.cpp.i
+
+src/quintUpdated.s: src/quintUpdated.cpp.s
+
+.PHONY : src/quintUpdated.s
+
+# target to generate assembly for a file
+src/quintUpdated.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/quintUpdated.cpp.s
+.PHONY : src/quintUpdated.cpp.s
+
 src/quintic.o: src/quintic.cpp.o
 
 .PHONY : src/quintic.o
@@ -427,6 +454,9 @@ help:
 	@echo "... src/parabolicBlend.o"
 	@echo "... src/parabolicBlend.i"
 	@echo "... src/parabolicBlend.s"
+	@echo "... src/quintUpdated.o"
+	@echo "... src/quintUpdated.i"
+	@echo "... src/quintUpdated.s"
 	@echo "... src/quintic.o"
 	@echo "... src/quintic.i"
 	@echo "... src/quintic.s"

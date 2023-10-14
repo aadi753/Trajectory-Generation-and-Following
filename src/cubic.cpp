@@ -136,8 +136,8 @@ void Cubic::findCoeff(std::vector<double> init_pos, std::vector<double> final_po
  */
 Cubic::~Cubic()
 {
-     std::cout << "SAB KHATAM KARDIA BHAI :/ "
-               << "\n";
+     // std::cout << "SAB KHATAM KARDIA BHAI :/ "
+     //           << "\n";
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVE FROM HERE LATER. :)
