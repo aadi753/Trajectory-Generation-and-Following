@@ -11,17 +11,17 @@
  *
  */
 
-
 quint::quint(int dof, int waypoints)
 {
      // std::cout << "quint TRAJECTORY !! \n\n";
      _waypts = waypoints;
      _dof = dof;
-
-     
 }
 
-void quint::calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,double maxVel,double maxAcc ,std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
+void quint::calcCoeffs(std::vector<double> initpos, std::vector<double> finalpos,
+                       double maxVel, double maxAcc, std::vector<double> init_vel,
+                       std::vector<double> final_vel, std::vector<double> init_accel,
+                       std::vector<double> final_accel)
 {
      init_vel.resize(_dof, 0.0);
      final_vel.resize(_dof, 0.0);
@@ -47,16 +47,20 @@ void quint::calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,do
      _finalTime = std::max(t1, t2);
      std::cout << _finalTime << "\n\n";
 
-     Eigen::VectorXd tStep = Eigen::VectorXd::Zero(_waypts);
-     tStep = tStep.LinSpaced(_waypts, 0, _finalTime);
-     _timeStep = tStep;
-
+     // Eigen::VectorXd tStep = Eigen::VectorXd::Zero(_waypts);
+     // tStep = tStep.LinSpaced(_waypts, 0, _finalTime);
+     // _timeStep = tStep;
 
      //* Ax=B
-     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(6, 6);     // matrix having coeff of the constants in quint eqn.
-     Eigen::MatrixXd A_INV = Eigen::MatrixXd::Zero(6, 6); // inveresee of the above matrix.
-     Eigen::VectorXd x = Eigen::VectorXd::Zero(6);        // the inital and final condition vector having inital and final position and velocity.
-     Eigen::VectorXd B = Eigen::VectorXd::Zero(6);        // the vector having the constant to be found out.
+     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(
+         6, 6); // matrix having coeff of the constants in quint eqn.
+     Eigen::MatrixXd A_INV =
+         Eigen::MatrixXd::Zero(6, 6); // inveresee of the above matrix.
+     Eigen::VectorXd x =
+         Eigen::VectorXd::Zero(6); // the inital and final condition vector having
+                                   // inital and final position and velocity.
+     Eigen::VectorXd B = Eigen::VectorXd::Zero(
+         6); // the vector having the constant to be found out.
 
      //* filling the matrix having coeff of quint eqn.
      A(0, 0) = 1.0;
@@ -81,7 +85,12 @@ void quint::calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,do
      //*calculating inverse of the above matrix */
      A_INV = A.inverse();
 
-     //* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
+     //* filling the "B" vector with the values of the different joints one by one
+     // and finding the coeff for all jonits and pushing them to the
+     //"_finalCoeffMat".
+
+     if (_finalConstMat.size() != 0 && callcount)
+          _finalConstMat.clear();
 
      std::vector<double> result;
      for (size_t i = 0; i < _dof; i++)
@@ -98,7 +107,8 @@ void quint::calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,do
           x = A_INV * B;
           // std::cout << "X: " << x << " " << i << " " << "\n";
 
-          // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
+          // * filling the values in "x" into another vector that will be pushed to
+          // the "_finalCoeffMat."
 
           for (size_t i = 0; i < x.size(); i++)
           {
@@ -109,44 +119,43 @@ void quint::calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,do
           //           << "\n";
 
           // printVec(result);
+          // if (_finalConstMat.size() != 0) _finalConstMat.clear();
           _finalConstMat.emplace_back(result);
           result.clear();
 
-     } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
+     } //! After this loop ends we'll have constants for all the joints in a
+       //! matrix called "_finalCoeffMat".
 
-     generatePathAndVel(_finalConstMat, _timeStep);
+     // generatePathAndVel(_finalConstMat, t);
+     callcount = true;
 }
 
-
-
-void quint::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)
-{    
-     if(_finalPath.size()!=0){
-          _finalAccel.clear();
-          _finalPath.clear();
-          _finalVel.clear();
-     }
-
-     double t;
+void quint::generatePathAndVel(double t, std::vector<double> &pos,
+                               std::vector<double> &vel, std::vector<double> &acc)
+{
+     // double t;
      std::vector<double> jointPosVec;
      std::vector<double> jointVelVec;
      std::vector<double> jointAccelVec;
 
-     for (size_t i = 0; i < linSpacedTime.size(); i++)
      {
-          // std::cout << "index: " << i << std::endl;
-          t = linSpacedTime[i];
           double posResult;
           double velResult;
           double accelResult;
 
-          for (auto ele : totalCoeffMat)
+          for (auto ele : _finalConstMat)
           {
-               posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t) + (ele[4] * t * t * t * t) + (ele[5] * t * t * t * t * t);
+               posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) +
+                           (ele[3] * t * t * t) + (ele[4] * t * t * t * t) +
+                           (ele[5] * t * t * t * t * t);
 
-               velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t) + (ele[4] * 4 * t * t * t) + (ele[5] * 5 * t * t * t * t);
+               velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) +
+                           (ele[3] * 3 * t * t) + (ele[4] * 4 * t * t * t) +
+                           (ele[5] * 5 * t * t * t * t);
 
-               accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) + (ele[3] * 6 * t) + (ele[4] * 12 * t * t) + (ele[5] * 20 * t * t * t);
+               accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) +
+                             (ele[3] * 6 * t) + (ele[4] * 12 * t * t) +
+                             (ele[5] * 20 * t * t * t);
 
                jointPosVec.emplace_back(posResult);
                jointVelVec.emplace_back(velResult);
@@ -156,13 +165,16 @@ void quint::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, E
           // printVec(jointPosVec);
           // std::cout << jointPosVec[2] << "\n";
 
-          _finalPath.emplace_back(jointPosVec);
-          _finalVel.emplace_back(jointVelVec);
-          _finalAccel.emplace_back(jointAccelVec);
-
-          jointPosVec.clear();
-          jointVelVec.clear();
-          jointAccelVec.clear();
+          // _finalPath.emplace_back(jointPosVec);
+          // _finalVel.emplace_back(jointVelVec);
+          // _finalAccel.emplace_back(jointAccelVec);
+          for (size_t i = 0; i < _dof; i++)
+          {
+               pos[i] = jointPosVec[i];
+               vel[i] = jointVelVec[i];
+               acc[i] = jointAccelVec[i];
+               /* code */
+          }
      }
      // printMat(_finalPath);
 }
@@ -173,17 +185,12 @@ quint::~quint()
      //           << "\n";
 }
 
-void quint::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
-{
-     quint::calcCoeffs(init_pos,final_pos,60,60); //! change this implementation later 
-}
-
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVED LATER :)
 void quint::printVec(std::vector<double> input)
 {
      for (size_t i = 0; i < input.size(); i++)
      {
-          std::cout << input[i] << " ";
+          std::cout << std::fixed << input[i] << " ";
      }
      std::cout << "\n\n";
 }

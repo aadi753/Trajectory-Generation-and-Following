@@ -1,5 +1,5 @@
 #pragma once
-#pragma once
+
 
 #include <iostream>
 #include <Eigen/Dense>
@@ -8,9 +8,8 @@
 #include <trajectories.h>
 #include <bits/stdc++.h>
 
-class quint : public Trajectories
+class quint
 {
-
 public:
      /**
       * @brief Construct a new quint:: quint object
@@ -21,9 +20,15 @@ public:
       */
      quint(int dof, int waypoints);
 
-     void calcCoeffs(std::vector<double>initpos,std::vector<double>finalpos,double maxVel,double maxAcc ,std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
+     void calcCoeffs(std::vector<double> initpos, std::vector<double> finalpos,
+                     double maxVel, double maxAcc,
+                     std::vector<double> init_vel = {},
+                     std::vector<double> final_vel = {},
+                     std::vector<double> init_accel = {},
+                     std::vector<double> final_accel = {});
 
-     void generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime);
+     void generatePathAndVel(double t, std::vector<double> &pos,
+                             std::vector<double> &vel, std::vector<double> &acc);
 
      void printVec(std::vector<double> input);
      void printMat(std::vector<std::vector<double>> input);
@@ -33,14 +38,13 @@ public:
      std::vector<std::vector<double>> &getVel() { return std::ref(_finalVel); }
      std::vector<std::vector<double>> &getAccel() { return std::ref(_finalAccel); }
 
-     void findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint = {}, std::vector<double> init_vel = {}, std::vector<double> final_vel = {}, std::vector<double> init_accel = {}, std::vector<double> final_accel = {});
-
      ~quint();
 
 private:
      int _dof;
      int _waypts;
      double _finalTime;
+     bool callcount{false};
 
      std::vector<double> _initpos, _finalpos;
 

@@ -45,7 +45,7 @@ void plotVecFromMat(std::vector<std::vector<double>> &inp)
      printable.resize(inp.size(), 0.0);
      for (size_t i = 0; i < inp.size(); i++)
      {
-          printable[i] = inp[i][4];
+          printable[i] = inp[i][1];
      }
      plt::plot(printable);
      // plt::show();
@@ -65,15 +65,15 @@ void getVecFromMat(std::vector<double> &inpt)
 int main()
 {
      // 15,20,-148,-159,150,152
-     std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}, {0, 150, 0, 0, 0, 0}, {0, 200, 0, 0, 0, 0}};
-     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {0, 0, 0, 0, 0, 0}};
+     // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}, {0, 150, 0, 0, 0, 0}, {0, 200, 0, 0, 0, 0}};
+     std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {0, 0, 0, 0, 0, 0}};
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 10, 20, 90, 27, 28}};
 
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
 
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 40, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}, {0, 110, 0, 0, 0, 0}, {0, 50, 0, 0, 27, 28}};
 
-     int selected_traj = trajectories_::quinticMulipt;
+     int selected_traj = trajectories_::septic;
      switch (selected_traj)
      {
      case trajectories_::cubic:
@@ -126,7 +126,7 @@ int main()
      // auto start = std::chrono::high_resolution_clock::now();
      std::unique_ptr<quint> t = std::make_unique<quint>(6, 70);
 
-     t->findCoeff(iPos, fPos);
+     t->calcCoeffs(iPos, fPos,30,30);
      plotVecFromMat(t->getPath());
      plotVecFromMat(t->getVel());
      plotVecFromMat(t->getAccel());
