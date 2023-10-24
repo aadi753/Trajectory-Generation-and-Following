@@ -10,6 +10,7 @@
 #include <trajectories/trajectories.h>
 #include <matplotlibcpp.h>
 #include <quintUpdated.h>
+#include <septicUpdated.h>
 
 #define plt matplotlibcpp
 #define waypts 400
@@ -45,7 +46,7 @@ void plotVecFromMat(std::vector<std::vector<double>> &inp)
      printable.resize(inp.size(), 0.0);
      for (size_t i = 0; i < inp.size(); i++)
      {
-          printable[i] = inp[i][1];
+          printable[i] = inp[i][4];
      }
      plt::plot(printable);
      // plt::show();
@@ -89,20 +90,20 @@ int main()
           traj = std::make_unique<Quintic>(6, 5, waypts);
           break;
      case trajectories_::septic:
-          traj = std::make_unique<Septic>(6, 5, waypts);
+          traj = std::make_unique<Septic>(6, 3, waypts);
           break;
      case trajectories_::cubicMultiViaPt:
           traj = std::make_unique<CubicMultiViaPoint>(6, 7, 14, 200, _waypointList);
           break;
      case trajectories_::quinticMulipt:
-          traj = std::make_unique<QuinticMultiViapt>(6, 7, 14, 300, _waypointList);
+          traj = std::make_unique<QuinticMultiViapt>(6, 7, 14, 100, _waypointList);
           break;
      default:
           std::cout << "PLEASE CHOOSE A VALID TRAJECTORY TYPE FROM THE ABOVE LIST!!" << std::endl;
           break;
      }
 
-     std::vector<double> fPos{1, 0.3, 0.9, 0.7, 120, 0.4};
+     std::vector<double> fPos{1, 0.3, 0.9, 0.7, 20, 0.4};
 
      // std::vector<double> fPos{0.9, 0.6, 0.6, 1.7, 0.8, 0.7};
 
@@ -124,16 +125,19 @@ int main()
      std::vector<std::vector<double>>{{0, 0, 0, 0, 0, 0}, {10, 20, 30, 40, 50, 60}, {20, 30, 40, 50, 60, 70}, {30, 40, 50, 60, 70, 80}, {123, 124, 125, 126, 127, 128}};
 
      // auto start = std::chrono::high_resolution_clock::now();
-     std::unique_ptr<quint> t = std::make_unique<quint>(6, 70);
+     std::unique_ptr<SEPTIC> t = std::make_unique<SEPTIC>(6);
+     std::unique_ptr<quint> t1 = std::make_unique<quint>(6, 1);
+     t->calcCoeffs(iPos, fPos, 20, 20, 20);
+     t1->calcCoeffs(iPos, fPos, 20, 20);
 
-     t->calcCoeffs(iPos, fPos,30,30);
-     plotVecFromMat(t->getPath());
-     plotVecFromMat(t->getVel());
-     plotVecFromMat(t->getAccel());
+     // traj->findCoeff(iPos, fPos);
+     // plotVecFromMat(traj->getPath());
+     // plotVecFromMat(traj->getVel());
+     // plotVecFromMat(traj->getAccel());
      // // printMat(traj->getPath());
      // // std::cout << "\n\n\n";
      //// printMat(traj->getVel());
-     plt::show();
+     // plt::show();
      // auto end = std::chrono::high_resolution_clock::now();
      // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
      // std::cout << "TIME TAKEN IS: " << duration.count() << "ms " << std::endl;

@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quintic.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/quintic.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/quinticMulitViapt.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/quinticMulitViapt.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/septic.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/septic.cpp.o"
+  "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/septicUpdated.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/septicUpdated.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

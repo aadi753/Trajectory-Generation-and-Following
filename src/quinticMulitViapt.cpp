@@ -18,10 +18,10 @@ QuinticMultiViapt::QuinticMultiViapt(int dof, int viaptTime, int finalTime, int 
 void QuinticMultiViapt::calcCoeffs(std::vector<double> init_pos, std::vector<double> viaPoint, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, bool lastSegment, std::vector<double> init_accel, std::vector<double> final_accel)
 {
      // std::cout << "out of constructor and in calcCoeff!!!!!!!!!!!!! \n";
-     init_vel.resize(_dof, 0.0);
-     final_vel.resize(_dof, 0.0);
-     init_accel.resize(_dof, 0.0);
-     final_accel.resize(_dof, 0.0);
+     init_vel.resize(_dof);
+     final_vel.resize(_dof);
+     init_accel.resize(_dof);
+     final_accel.resize(_dof);
 
      // Ax=B (statespace format).
      Eigen::MatrixXd A = Eigen::MatrixXd::Zero(12, 12);     // matrix having coeff of the constants in cubic eqn.

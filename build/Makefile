@@ -425,6 +425,33 @@ src/septic.cpp.s:
 	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/septic.cpp.s
 .PHONY : src/septic.cpp.s
 
+src/septicUpdated.o: src/septicUpdated.cpp.o
+
+.PHONY : src/septicUpdated.o
+
+# target to build an object file
+src/septicUpdated.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/septicUpdated.cpp.o
+.PHONY : src/septicUpdated.cpp.o
+
+src/septicUpdated.i: src/septicUpdated.cpp.i
+
+.PHONY : src/septicUpdated.i
+
+# target to preprocess a source file
+src/septicUpdated.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/septicUpdated.cpp.i
+.PHONY : src/septicUpdated.cpp.i
+
+src/septicUpdated.s: src/septicUpdated.cpp.s
+
+.PHONY : src/septicUpdated.s
+
+# target to generate assembly for a file
+src/septicUpdated.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/septicUpdated.cpp.s
+.PHONY : src/septicUpdated.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -466,6 +493,9 @@ help:
 	@echo "... src/septic.o"
 	@echo "... src/septic.i"
 	@echo "... src/septic.s"
+	@echo "... src/septicUpdated.o"
+	@echo "... src/septicUpdated.i"
+	@echo "... src/septicUpdated.s"
 .PHONY : help
 
 

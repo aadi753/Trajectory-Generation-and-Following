@@ -1,36 +1,49 @@
-#include <septic.h>
+#include <septicUpdated.h>
 
-Septic::Septic(int dof, int finalTime, int waypoints)
+SEPTIC::SEPTIC(int dof)
 {
      std::cout << "SEPTIC TRAJECTORY !! \n\n";
-     _waypts = waypoints;
-     _dof = dof;
-     _finalTime = finalTime;
-     Eigen::VectorXd tStep = Eigen::VectorXd::Zero(_waypts);
 
-     tStep = tStep.LinSpaced(_waypts, 0, finalTime);
-     _timeStep = tStep;
-     // std::cout << "TIME STEP: " << tStep << " " << tStep.size() << "\n\n";
+     _dof = dof;
 }
 
-void Septic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel, std::vector<double> init_jerk, std::vector<double> final_jerk)
+void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double maxvel, double maxacc, double maxjerk, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel, std::vector<double> init_jerk, std::vector<double> final_jerk)
 {
      init_vel.resize(_dof, 0.0);
      final_vel.resize(_dof, 0.0);
-
      init_accel.resize(_dof, 0.0);
      final_accel.resize(_dof, 0.0);
-
      init_jerk.resize(_dof, 0.0);
      final_jerk.resize(_dof, 0.0);
 
+     // TODO : find optimal time for trajectory
+
+     std::vector<double> diffVec;
+     for (size_t i = 0; i < final_pos.size(); i++)
+     {
+          diffVec.emplace_back(abs(final_pos[i] - init_pos[i]));
+     }
+
+     double distance = *std::max_element(diffVec.begin(), diffVec.end());
+
+     std::cout << distance << "\n\n";
+
+     double t1 = (35 * (distance)) / (16 * maxvel);
+     double t2 = sqrt(((7.5132 * distance) / (maxacc)));
+     double t3 = cbrt((52.5 * distance) / maxjerk);
+
+     std::cout << t1 << " " << t2 << " " << t3 << "\n";
+
+     _finalTime = std::max(t1, std::max(t2, t3));
+     std::cout << _finalTime << "\n\n";
+
      //* Ax=B
-     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(8, 8);     // matrix having coeff of the constants in Septic eqn.
+     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(8, 8);     // matrix having coeff of the constants in SEPTIC eqn.
      Eigen::MatrixXd A_INV = Eigen::MatrixXd::Zero(8, 8); // inveresee of the above matrix.
      Eigen::VectorXd x = Eigen::VectorXd::Zero(8);        // the inital and final condition vector having inital and final position and velocity.
      Eigen::VectorXd B = Eigen::VectorXd::Zero(8);        // the vector having the constant to be found out.
 
-     //* filling the matrix having coeff of Septic eqn.
+     //* filling the matrix having coeff of SEPTIC eqn.
      A(0, 0) = 1.0;
      A(1, 1) = 1.0;
      A(2, 2) = 2.0;
@@ -67,6 +80,9 @@ void Septic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
 
      //* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
 
+     if (_finalConstMat.size() != 0 && callCount)
+          _finalConstMat.clear();
+
      std::vector<double> result;
      for (size_t i = 0; i < _dof; i++)
      {
@@ -100,28 +116,24 @@ void Septic::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
           result.clear();
 
      } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
-
-     generatePathAndVel(_finalConstMat, _timeStep);
 }
 
-void Septic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, Eigen::VectorXd linSpacedTime)
+void SEPTIC::generatePathAndVel(double t, std::vector<double> &position, std::vector<double> &velocity, std::vector<double> &acceleration, std::vector<double> &jerk)
 {
-     double t;
+
      std::vector<double> jointPosVec;
      std::vector<double> jointVelVec;
      std::vector<double> jointAccelVec;
      std::vector<double> jointJerkVec;
 
-     for (size_t i = 0; i < linSpacedTime.size(); i++)
      {
           // std::cout << "index: " << i << std::endl;
-          t = linSpacedTime[i];
           double posResult;
           double velResult;
           double accelResult;
           double jerkResult;
 
-          for (auto ele : totalCoeffMat)
+          for (auto ele : _finalConstMat)
           {
                posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t) + (ele[4] * t * t * t * t) + (ele[5] * t * t * t * t * t) + (ele[6] * t * t * t * t * t * t) + (ele[7] * t * t * t * t * t * t * t);
 
@@ -139,32 +151,22 @@ void Septic::generatePathAndVel(std::vector<std::vector<double>> totalCoeffMat, 
 
           // printVec(jointPosVec);
 
-          _finalPath.emplace_back(jointPosVec);
-          _finalVel.emplace_back(jointVelVec);
-          _finalAccel.emplace_back(jointAccelVec);
-          _finalJerk.emplace_back(jointJerkVec);
-
-          jointPosVec.clear();
-          jointVelVec.clear();
-          jointAccelVec.clear();
-          jointJerkVec.clear();
+          position = jointPosVec;
+          velocity = jointVelVec;
+          acceleration = jointAccelVec;
+          jerk = jointJerkVec;
      }
      // printMat(_finalPath);
 }
 
-Septic::~Septic()
+SEPTIC::~SEPTIC()
 {
      // std::cout << "SAB KHATAM KARDIA BHAI :/ "
      //           << "\n";
 }
 
-void Septic::findCoeff(std::vector<double> init_pos, std::vector<double> final_pos, std::vector<double> waypoint, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel)
-{
-     Septic::calcCoeffs(init_pos, final_pos, init_vel, final_vel, init_accel, final_accel);
-}
-
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVED LATER :)
-void Septic::printVec(std::vector<double> input)
+void SEPTIC::printVec(std::vector<double> input)
 {
      for (size_t i = 0; i < input.size(); i++)
      {
@@ -173,7 +175,7 @@ void Septic::printVec(std::vector<double> input)
      std::cout << "\n\n";
 }
 
-void Septic::printMat(std::vector<std::vector<double>> input)
+void SEPTIC::printMat(std::vector<std::vector<double>> input)
 {
      for (auto &ele : input)
      {

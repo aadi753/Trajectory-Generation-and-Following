@@ -9,6 +9,7 @@ CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/quintUpdated.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/quintic.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/quinticMulitViapt.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/septic.h
+CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/septicUpdated.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../include/trajectories/trajectories.h
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: ../bin/cubicTraj.cpp
 CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.o: /usr/include/eigen3/Eigen/Cholesky

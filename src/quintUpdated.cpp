@@ -14,7 +14,7 @@
 quint::quint(int dof, int waypoints)
 {
      // std::cout << "quint TRAJECTORY !! \n\n";
-     _waypts = waypoints;
+     // _waypts = waypoints;
      _dof = dof;
 }
 
@@ -181,8 +181,7 @@ void quint::generatePathAndVel(double t, std::vector<double> &pos,
 
 quint::~quint()
 {
-     // std::cout << "SAB KHATAM KARDIA BHAI :/ "
-     //           << "\n";
+     
 }
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVED LATER :)

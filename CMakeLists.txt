@@ -20,6 +20,7 @@ add_library(Trajectory
      src/cubicMultiViaPoint.cpp
      src/quinticMulitViapt.cpp
      src/quintUpdated.cpp
+     src/septicUpdated.cpp
 )
 
 add_executable(trajTest bin/cubicTraj.cpp)
