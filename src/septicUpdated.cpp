@@ -16,6 +16,8 @@ void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
      init_jerk.resize(_dof, 0.0);
      final_jerk.resize(_dof, 0.0);
 
+     _maxvel = maxvel;
+
      // TODO : find optimal time for trajectory
 
      std::vector<double> diffVec;
@@ -125,6 +127,15 @@ void SEPTIC::generatePathAndVel(double t, std::vector<double> &position, std::ve
      std::vector<double> jointVelVec;
      std::vector<double> jointAccelVec;
      std::vector<double> jointJerkVec;
+     if (t >= 1.5 * _finalTime)
+     {
+          std::cout << " \n\nROBOT NOT ABLE TO KEEP UP WITH TRAJECTORY, EXITING!!\n\n ";
+          for (int i = 0; i < _dof; i++)
+          {
+               velocity[i] = 0;
+          }
+          return;
+     }
 
      {
           // std::cout << "index: " << i << std::endl;
@@ -142,6 +153,9 @@ void SEPTIC::generatePathAndVel(double t, std::vector<double> &position, std::ve
                accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) + (ele[3] * 6 * t) + (ele[4] * 12 * t * t) + (ele[5] * 20 * t * t * t) + (ele[6] * 30 * t * t * t * t) + (ele[7] * 42 * t * t * t * t * t);
 
                jerkResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 0) + (ele[3] * 6) + (ele[4] * 24 * t) + (ele[5] * 60 * t * t) + (ele[6] * 120 * t * t * t) + (ele[7] * 210 * t * t * t * t);
+
+               if (std::abs(velResult) > _maxvel + 5)
+                    velResult = 0; // robot should not move if the velocity is not respecting the limits.
 
                jointPosVec.emplace_back(posResult);
                jointVelVec.emplace_back(velResult);

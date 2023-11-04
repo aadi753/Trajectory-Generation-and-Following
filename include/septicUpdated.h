@@ -30,6 +30,7 @@ public:
 
 private:
      int _dof;
+     double _maxvel;
      // int _waypts;
      double _finalTime;
      bool callCount= false;

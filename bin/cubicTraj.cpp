@@ -66,15 +66,16 @@ void getVecFromMat(std::vector<double> &inpt)
 int main()
 {
      // 15,20,-148,-159,150,152
+     
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}, {0, 150, 0, 0, 0, 0}, {0, 200, 0, 0, 0, 0}};
-     std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {0, 0, 0, 0, 0, 0}};
+     std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {40, 30, 30, 40, 20, 60}, {80, -10, -10,120 , 30, 70}, {0, 0, 0, 0, 0, 0}};
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 10, 20, 90, 27, 28}};
 
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {10, 30, 30, 40, 50, 60}, {50, 0, -10, 50, 60, 70}, {40, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}, {40, 30, 30, 40, 50, 60}, {80, -10, -10, 50, 60, 70}, {-30, 40, -30, 50, 60, 70}, {50, 40, 20, 90, 27, 28}};
 
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 40, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}, {0, 110, 0, 0, 0, 0}, {0, 50, 0, 0, 27, 28}};
 
-     int selected_traj = trajectories_::septic;
+     int selected_traj = trajectories_::quinticMulipt;
      switch (selected_traj)
      {
      case trajectories_::cubic:
@@ -93,10 +94,10 @@ int main()
           traj = std::make_unique<Septic>(6, 3, waypts);
           break;
      case trajectories_::cubicMultiViaPt:
-          traj = std::make_unique<CubicMultiViaPoint>(6, 7, 14, 200, _waypointList);
+          traj = std::make_unique<CubicMultiViaPoint>(6, 7, 10, 200, _waypointList);
           break;
      case trajectories_::quinticMulipt:
-          traj = std::make_unique<QuinticMultiViapt>(6, 7, 14, 100, _waypointList);
+          traj = std::make_unique<QuinticMultiViapt>(6, 5, 10, 100, _waypointList);
           break;
      default:
           std::cout << "PLEASE CHOOSE A VALID TRAJECTORY TYPE FROM THE ABOVE LIST!!" << std::endl;
@@ -125,19 +126,19 @@ int main()
      std::vector<std::vector<double>>{{0, 0, 0, 0, 0, 0}, {10, 20, 30, 40, 50, 60}, {20, 30, 40, 50, 60, 70}, {30, 40, 50, 60, 70, 80}, {123, 124, 125, 126, 127, 128}};
 
      // auto start = std::chrono::high_resolution_clock::now();
-     std::unique_ptr<SEPTIC> t = std::make_unique<SEPTIC>(6);
-     std::unique_ptr<quint> t1 = std::make_unique<quint>(6, 1);
-     t->calcCoeffs(iPos, fPos, 20, 20, 20);
-     t1->calcCoeffs(iPos, fPos, 20, 20);
+     // std::unique_ptr<SEPTIC> t = std::make_unique<SEPTIC>(6);
+     // std::unique_ptr<quint> t1 = std::make_unique<quint>(6, 1);
+     // t->calcCoeffs(iPos, fPos, 20, 20, 20);
+     // t1->calcCoeffs(iPos, fPos, 20, 20);
 
-     // traj->findCoeff(iPos, fPos);
-     // plotVecFromMat(traj->getPath());
-     // plotVecFromMat(traj->getVel());
-     // plotVecFromMat(traj->getAccel());
+     traj->findCoeff(iPos, fPos);
+     plotVecFromMat(traj->getPath());
+     plotVecFromMat(traj->getVel());
+     plotVecFromMat(traj->getAccel());
      // // printMat(traj->getPath());
      // // std::cout << "\n\n\n";
      //// printMat(traj->getVel());
-     // plt::show();
+     plt::show();
      // auto end = std::chrono::high_resolution_clock::now();
      // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
      // std::cout << "TIME TAKEN IS: " << duration.count() << "ms " << std::endl;
