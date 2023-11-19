@@ -1,4 +1,4 @@
-#include <septicUpdated.h>
+#include <trajectory/trajectories/septic.h>
 
 SEPTIC::SEPTIC(int dof)
 {
@@ -7,7 +7,13 @@ SEPTIC::SEPTIC(int dof)
      _dof = dof;
 }
 
-void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos, double maxvel, double maxacc, double maxjerk, std::vector<double> init_vel, std::vector<double> final_vel, std::vector<double> init_accel, std::vector<double> final_accel, std::vector<double> init_jerk, std::vector<double> final_jerk)
+void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_pos,
+                        double maxvel, double maxacc, double maxjerk, bool degrees,
+                        std::vector<double> init_vel, std::vector<double> final_vel,
+                        std::vector<double> init_accel,
+                        std::vector<double> final_accel,
+                        std::vector<double> init_jerk,
+                        std::vector<double> final_jerk)
 {
      init_vel.resize(_dof, 0.0);
      final_vel.resize(_dof, 0.0);
@@ -16,34 +22,66 @@ void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
      init_jerk.resize(_dof, 0.0);
      final_jerk.resize(_dof, 0.0);
 
-     _maxvel = maxvel;
+     if (degrees)
+     {
+          maxvel = maxvel * (M_PI / 180);
+          maxacc = maxacc * (M_PI / 180);
+          maxjerk = maxjerk * (M_PI / 180);
+
+          for (size_t i = 0; i < _dof; i++)
+          {
+               // init_pos[i] = init_pos[i] * (M_PI / 180);
+               final_pos[i] = final_pos[i] * (M_PI / 180);
+               init_vel[i] = init_vel[i] * (M_PI / 180);
+               init_accel[i] = init_accel[i] * (M_PI / 180);
+               init_jerk[i] = init_jerk[i] * (M_PI / 180);
+               final_vel[i] = final_vel[i] * (M_PI / 180);
+               final_accel[i] = final_accel[i] * (M_PI / 180);
+               final_jerk[i] = final_jerk[i] * (M_PI / 180);
+          }
+     }
 
      // TODO : find optimal time for trajectory
 
      std::vector<double> diffVec;
      for (size_t i = 0; i < final_pos.size(); i++)
      {
-          diffVec.emplace_back(abs(final_pos[i] - init_pos[i]));
+          diffVec.emplace_back(std::abs(final_pos[i] - init_pos[i]));
      }
 
-     double distance = *std::max_element(diffVec.begin(), diffVec.end());
+     double distance = (*std::max_element(diffVec.begin(), diffVec.end()));
 
-     std::cout << distance << "\n\n";
+     // std::cout << distance << "\n\n";
+     // ! safety clamping of constrains if distance to travel is less
 
+     // if (distance < 20 * (M_PI / 180)) {
+     //   maxvel = 10 * (M_PI / 180);
+     //   maxacc =5 * (M_PI / 180);
+     //   maxjerk = 5 * (M_PI / 180);
+     // }
+
+     _maxvel = maxvel; // will be used to clamp the velocity for safety.
+
+     //! NOTE: these numbers are calculated mathematically so DO NOT CHANGE THEM.
      double t1 = (35 * (distance)) / (16 * maxvel);
      double t2 = sqrt(((7.5132 * distance) / (maxacc)));
      double t3 = cbrt((52.5 * distance) / maxjerk);
 
-     std::cout << t1 << " " << t2 << " " << t3 << "\n";
+     // std::cout << t1 << " " << t2 << " " << t3 << "\n";
 
      _finalTime = std::max(t1, std::max(t2, t3));
-     std::cout << _finalTime << "\n\n";
+     // std::cout << _finalTime << "\n\n";
 
      //* Ax=B
-     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(8, 8);     // matrix having coeff of the constants in SEPTIC eqn.
-     Eigen::MatrixXd A_INV = Eigen::MatrixXd::Zero(8, 8); // inveresee of the above matrix.
-     Eigen::VectorXd x = Eigen::VectorXd::Zero(8);        // the inital and final condition vector having inital and final position and velocity.
-     Eigen::VectorXd B = Eigen::VectorXd::Zero(8);        // the vector having the constant to be found out.
+     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(
+         8, 8); // matrix having coeff of the constants in SEPTIC eqn.
+     Eigen::MatrixXd A_INV =
+         Eigen::MatrixXd::Zero(8, 8); // inveresee of the above matrix.
+     Eigen::VectorXd x =
+         Eigen::VectorXd::Zero(8); // the inital and final condition vector having
+                                   // inital and final position and velocity.
+     Eigen::VectorXd B = Eigen::VectorXd::Zero(
+         8); // the vector having the constant to be found out.
 
      //* filling the matrix having coeff of SEPTIC eqn.
      A(0, 0) = 1.0;
@@ -80,7 +118,9 @@ void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
      //*calculating inverse of the above matrix */
      A_INV = A.inverse();
 
-     //* filling the "B" vector with the values of the different joints one by one and finding the coeff for all jonits and pushing them to the "_finalCoeffMat".
+     //* filling the "B" vector with the values of the different joints one by one
+     // and finding the coeff for all jonits and pushing them to the
+     //"_finalCoeffMat".
 
      if (_finalConstMat.size() != 0 && callCount)
           _finalConstMat.clear();
@@ -103,7 +143,8 @@ void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
           x = A_INV * B;
           // std::cout << "X: " << x << " " << i << " " << "\n";
 
-          // * filling the values in "x" into another vector that will be pushed to the "_finalCoeffMat."
+          // * filling the values in "x" into another vector that will be pushed to
+          // the "_finalCoeffMat."
 
           for (size_t i = 0; i < x.size(); i++)
           {
@@ -117,25 +158,31 @@ void SEPTIC::calcCoeffs(std::vector<double> init_pos, std::vector<double> final_
           _finalConstMat.emplace_back(result);
           result.clear();
 
-     } //! After this loop ends we'll have constants for all the joints in a matrix called "_finalCoeffMat".
+     } //! After this loop ends we'll have constants for all the joints in a
+       //! matrix called "_finalCoeffMat".
+     callCount = true;
 }
 
-void SEPTIC::generatePathAndVel(double t, std::vector<double> &position, std::vector<double> &velocity, std::vector<double> &acceleration, std::vector<double> &jerk)
+bool SEPTIC::generatePathAndVel(double t, std::vector<double> &position,
+                                std::vector<double> &velocity,
+                                std::vector<double> &acceleration,
+                                std::vector<double> &jerk)
 {
+     if (t >= 2 * _finalTime)
+     {
+          std::cout
+              << " \n\nROBOT NOT ABLE TO KEEP UP WITH TRAJECTORY, EXITING!!\n\n ";
+          for (int i = 0; i < _dof; i++)
+          {
+               velocity[i] = 0;
+          }
+          return false;
+     }
 
      std::vector<double> jointPosVec;
      std::vector<double> jointVelVec;
      std::vector<double> jointAccelVec;
      std::vector<double> jointJerkVec;
-     if (t >= 1.5 * _finalTime)
-     {
-          std::cout << " \n\nROBOT NOT ABLE TO KEEP UP WITH TRAJECTORY, EXITING!!\n\n ";
-          for (int i = 0; i < _dof; i++)
-          {
-               velocity[i] = 0;
-          }
-          return;
-     }
 
      {
           // std::cout << "index: " << i << std::endl;
@@ -146,16 +193,30 @@ void SEPTIC::generatePathAndVel(double t, std::vector<double> &position, std::ve
 
           for (auto ele : _finalConstMat)
           {
-               posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) + (ele[3] * t * t * t) + (ele[4] * t * t * t * t) + (ele[5] * t * t * t * t * t) + (ele[6] * t * t * t * t * t * t) + (ele[7] * t * t * t * t * t * t * t);
+               posResult = (ele[0] * 1) + (ele[1] * t) + (ele[2] * t * t) +
+                           (ele[3] * t * t * t) + (ele[4] * t * t * t * t) +
+                           (ele[5] * t * t * t * t * t) +
+                           (ele[6] * t * t * t * t * t * t) +
+                           (ele[7] * t * t * t * t * t * t * t);
 
-               velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) + (ele[3] * 3 * t * t) + (ele[4] * 4 * t * t * t) + (ele[5] * 5 * t * t * t * t) + (ele[6] * 6 * t * t * t * t * t) + (ele[7] * 7 * t * t * t * t * t * t);
+               velResult = (ele[0] * 0) + (ele[1] * 1) + (ele[2] * 2 * t) +
+                           (ele[3] * 3 * t * t) + (ele[4] * 4 * t * t * t) +
+                           (ele[5] * 5 * t * t * t * t) +
+                           (ele[6] * 6 * t * t * t * t * t) +
+                           (ele[7] * 7 * t * t * t * t * t * t);
 
-               accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) + (ele[3] * 6 * t) + (ele[4] * 12 * t * t) + (ele[5] * 20 * t * t * t) + (ele[6] * 30 * t * t * t * t) + (ele[7] * 42 * t * t * t * t * t);
+               accelResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 2) +
+                             (ele[3] * 6 * t) + (ele[4] * 12 * t * t) +
+                             (ele[5] * 20 * t * t * t) + (ele[6] * 30 * t * t * t * t) +
+                             (ele[7] * 42 * t * t * t * t * t);
 
-               jerkResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 0) + (ele[3] * 6) + (ele[4] * 24 * t) + (ele[5] * 60 * t * t) + (ele[6] * 120 * t * t * t) + (ele[7] * 210 * t * t * t * t);
+               jerkResult = (ele[0] * 0) + (ele[1] * 0) + (ele[2] * 0) + (ele[3] * 6) +
+                            (ele[4] * 24 * t) + (ele[5] * 60 * t * t) +
+                            (ele[6] * 120 * t * t * t) + (ele[7] * 210 * t * t * t * t);
 
-               if (std::abs(velResult) > _maxvel + 5)
-                    velResult = 0; // robot should not move if the velocity is not respecting the limits.
+               if (std::abs(velResult) > _maxvel + 0.01)
+                    velResult = 0; // robot should not move if the velocity is not
+                                   // respecting the limits.
 
                jointPosVec.emplace_back(posResult);
                jointVelVec.emplace_back(velResult);
@@ -164,20 +225,16 @@ void SEPTIC::generatePathAndVel(double t, std::vector<double> &position, std::ve
           }
 
           // printVec(jointPosVec);
-
           position = jointPosVec;
           velocity = jointVelVec;
           acceleration = jointAccelVec;
           jerk = jointJerkVec;
      }
      // printMat(_finalPath);
+     return true;
 }
 
-SEPTIC::~SEPTIC()
-{
-     // std::cout << "SAB KHATAM KARDIA BHAI :/ "
-     //           << "\n";
-}
+SEPTIC::~SEPTIC() {}
 
 // ! HELPER FUNCTION TO PRINT THE VECTORS AND MATRICES. WILL BE REMOVED LATER :)
 void SEPTIC::printVec(std::vector<double> input)
