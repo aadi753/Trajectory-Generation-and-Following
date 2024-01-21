@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/Scurve.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/Scurve.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/cubic.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubicMultiViaPoint.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o"
   "/home/aditya.singh/projects/Trajectory-Generation-and-Following/src/cubic_via_point.cpp" "/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o"

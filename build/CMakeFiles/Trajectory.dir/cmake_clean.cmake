@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Trajectory.dir/src/Scurve.cpp.o"
   "CMakeFiles/Trajectory.dir/src/cubic.cpp.o"
   "CMakeFiles/Trajectory.dir/src/cubicMultiViaPoint.cpp.o"
   "CMakeFiles/Trajectory.dir/src/cubic_via_point.cpp.o"

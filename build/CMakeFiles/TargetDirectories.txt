@@ -4,5 +4,6 @@
 /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/list_install_components.dir
 /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/rebuild_cache.dir
 /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/edit_cache.dir
+/home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/run.dir
 /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/trajTest.dir
 /home/aditya.singh/projects/Trajectory-Generation-and-Following/build/CMakeFiles/Trajectory.dir

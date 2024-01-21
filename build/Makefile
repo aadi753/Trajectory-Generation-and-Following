@@ -157,6 +157,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named run
+
+# Build rule for target.
+run: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run
+.PHONY : run
+
+# fast build rule for target.
+run/fast:
+	$(MAKE) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/build
+.PHONY : run/fast
+
+#=============================================================================
 # Target rules for targets named trajTest
 
 # Build rule for target.
@@ -208,6 +221,60 @@ bin/cubicTraj.s: bin/cubicTraj.cpp.s
 bin/cubicTraj.cpp.s:
 	$(MAKE) -f CMakeFiles/trajTest.dir/build.make CMakeFiles/trajTest.dir/bin/cubicTraj.cpp.s
 .PHONY : bin/cubicTraj.cpp.s
+
+bin/run.o: bin/run.cpp.o
+
+.PHONY : bin/run.o
+
+# target to build an object file
+bin/run.cpp.o:
+	$(MAKE) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/bin/run.cpp.o
+.PHONY : bin/run.cpp.o
+
+bin/run.i: bin/run.cpp.i
+
+.PHONY : bin/run.i
+
+# target to preprocess a source file
+bin/run.cpp.i:
+	$(MAKE) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/bin/run.cpp.i
+.PHONY : bin/run.cpp.i
+
+bin/run.s: bin/run.cpp.s
+
+.PHONY : bin/run.s
+
+# target to generate assembly for a file
+bin/run.cpp.s:
+	$(MAKE) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/bin/run.cpp.s
+.PHONY : bin/run.cpp.s
+
+src/Scurve.o: src/Scurve.cpp.o
+
+.PHONY : src/Scurve.o
+
+# target to build an object file
+src/Scurve.cpp.o:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/Scurve.cpp.o
+.PHONY : src/Scurve.cpp.o
+
+src/Scurve.i: src/Scurve.cpp.i
+
+.PHONY : src/Scurve.i
+
+# target to preprocess a source file
+src/Scurve.cpp.i:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/Scurve.cpp.i
+.PHONY : src/Scurve.cpp.i
+
+src/Scurve.s: src/Scurve.cpp.s
+
+.PHONY : src/Scurve.s
+
+# target to generate assembly for a file
+src/Scurve.cpp.s:
+	$(MAKE) -f CMakeFiles/Trajectory.dir/build.make CMakeFiles/Trajectory.dir/src/Scurve.cpp.s
+.PHONY : src/Scurve.cpp.s
 
 src/cubic.o: src/cubic.cpp.o
 
@@ -464,11 +531,18 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... run"
 	@echo "... trajTest"
 	@echo "... Trajectory"
 	@echo "... bin/cubicTraj.o"
 	@echo "... bin/cubicTraj.i"
 	@echo "... bin/cubicTraj.s"
+	@echo "... bin/run.o"
+	@echo "... bin/run.i"
+	@echo "... bin/run.s"
+	@echo "... src/Scurve.o"
+	@echo "... src/Scurve.i"
+	@echo "... src/Scurve.s"
 	@echo "... src/cubic.o"
 	@echo "... src/cubic.i"
 	@echo "... src/cubic.s"

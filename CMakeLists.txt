@@ -21,6 +21,7 @@ add_library(Trajectory
      src/quinticMulitViapt.cpp
      src/quintUpdated.cpp
      src/septicUpdated.cpp
+     src/Scurve.cpp
 )
 
 add_executable(trajTest bin/cubicTraj.cpp)
@@ -29,7 +30,8 @@ target_link_libraries(trajTest
      plotter
      ${Python3_LIBRARIES}
 )
-
+add_executable(run bin/run.cpp )
+target_link_libraries(run Trajectory)
 install(TARGETS Trajectory DESTINATION lib)
 install(FILES include/cubic.h
                include/trajectories/trajectories.h
