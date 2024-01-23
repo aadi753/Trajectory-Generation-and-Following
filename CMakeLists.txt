@@ -30,14 +30,19 @@ target_link_libraries(trajTest
      plotter
      ${Python3_LIBRARIES}
 )
-add_executable(run bin/run.cpp )
-target_link_libraries(run Trajectory)
+add_executable(run bin/run.cpp)
+target_link_libraries(run
+     Trajectory
+     plotter
+     ${Python3_LIBRARIES}
+)
+
 install(TARGETS Trajectory DESTINATION lib)
 install(FILES include/cubic.h
-               include/trajectories/trajectories.h
-               include/cubic_via_point.h
-               include/cubicMultiViaPoint.h
-               include/quinticMulitViapt.h
-               include/quintic.h
+     include/trajectories/trajectories.h
+     include/cubic_via_point.h
+     include/cubicMultiViaPoint.h
+     include/quinticMulitViapt.h
+     include/quintic.h
      DESTINATION include
 )

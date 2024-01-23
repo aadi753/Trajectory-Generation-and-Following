@@ -46,7 +46,7 @@ void plotVecFromMat(std::vector<std::vector<double>> &inp)
      printable.resize(inp.size(), 0.0);
      for (size_t i = 0; i < inp.size(); i++)
      {
-          printable[i] = inp[i][4];
+          printable[i] = inp[i][3];
      }
      plt::plot(printable);
      // plt::show();
@@ -75,7 +75,7 @@ int main()
 
      // std::vector<std::vector<double>> _waypointList = {{0, 0, 0, 0, 0, 0}, {0, 40, 0, 0, 0, 0}, {0, 60, 0, 0, 0, 0}, {0, 90, 0, 0, 0, 0}, {0, 110, 0, 0, 0, 0}, {0, 50, 0, 0, 27, 28}};
 
-     int selected_traj = trajectories_::quinticMulipt;
+     int selected_traj = trajectories_::parabolicBlend;
      switch (selected_traj)
      {
      case trajectories_::cubic:
@@ -85,7 +85,7 @@ int main()
           traj = std::make_unique<CubicViaPoint>(6, 2, 5, waypts);
           break;
      case trajectories_::parabolicBlend:
-          traj = std::make_unique<ParabolicBlend>(6, 3, waypts);
+          traj = std::make_unique<ParabolicBlend>(6, 5, waypts);
           break;
      case trajectories_::quintic:
           traj = std::make_unique<Quintic>(6, 5, waypts);
@@ -104,7 +104,7 @@ int main()
           break;
      }
 
-     std::vector<double> fPos{1, 0.3, 0.9, 0.7, 20, 0.4};
+     std::vector<double> fPos{0.3, 0.2, 0.9, -7, 20, 0.4};
 
      // std::vector<double> fPos{0.9, 0.6, 0.6, 1.7, 0.8, 0.7};
 

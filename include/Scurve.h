@@ -24,11 +24,11 @@ class Scurve {
      double Alim_d_; // acceleration limit for deceleration phase
      double Y_; // gamma (ranges from 0-1)
      int dof_;  // degree's of freedom
-
+     std::vector<double>initPos_ , finalPos_;
      public:
      Scurve ( );
      Scurve ( int dof );
-     bool calcCoeff ( std::vector<double>targetPos , double maxVel = 20 , double maxAcc = 20 , double maxJerk = 20 , std::vector<double>initVel = {} , std::vector<double>finalVel = {} );
+     bool calcCoeff ( std::vector<double>initPos , std::vector<double>targetPos , double maxVel = 20 , double maxAcc = 20 , double maxJerk = 20 , std::vector<double>initVel = {} , std::vector<double>finalVel = {} );
      bool generatePathAndVel ( double t , std::vector<double> &pos , std::vector<double> &vel , std::vector<double> &acc , std::vector<double> &jerk );
 
      ~Scurve ( );
