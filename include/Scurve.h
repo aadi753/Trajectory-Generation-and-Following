@@ -2,7 +2,7 @@
 #include<iostream>
 #include<vector>
 #include<math.h>
-
+#include <bits/stdc++.h>
 class Scurve {
      private:
      double Ta_; // time for acceleration phase
@@ -24,6 +24,9 @@ class Scurve {
      double Alim_d_; // acceleration limit for deceleration phase
      double Y_; // gamma (ranges from 0-1)
      int dof_;  // degree's of freedom
+
+     std::vector<std::vector<double>>finalCoeffMat_;
+
      std::vector<double>initPos_ , finalPos_;
      public:
      Scurve ( );

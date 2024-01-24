@@ -17,8 +17,17 @@ bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetP
      V0_ = initVel [ 0 ];
      V1_ = finalVel [ 0 ];
 
-     // std::vector<double>initPos = { 0 };
-     double displacement = targetPos [ 0 ] - initPos [ 0 ];
+     int maxDistIndex;
+     std::vector<double> diffVec;
+     for ( size_t i = 0; i < targetPos.size ( ); i++ ) {
+          diffVec.emplace_back ( std::abs ( targetPos [ i ] - initPos [ i ] ) );
+          }
+
+     double displacement = *std::max_element ( diffVec.begin ( ) , diffVec.end ( ) );
+     auto it = std::find ( diffVec.begin ( ) , diffVec.end ( ) , displacement );
+     maxDistIndex = it - diffVec.begin ( );
+     std::cout <<"max Displacement: "<< displacement << "\n";
+     std::cout <<"maxDistance index: "<< maxDistIndex << "\n";
 
      double TJ_star = std::min ( sqrt ( abs ( V1_ - V0_ ) / Jmax_ ) , Amax_ / Jmax_ );
 
@@ -83,7 +92,6 @@ bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetP
           Tv_ = 0;
           std::cout << "\ncase2:\n";
           double delta = ( pow ( Amax_ , 4 ) / pow ( Jmax_ , 2 ) ) + ( 2 * ( pow ( V0_ , 2 ) + pow ( V1_ , 2 ) ) ) + Amax_ * ( 4 * (displacement)-( ( 2 * ( Amax_ / Jmax_ ) ) * ( V0_ + V1_ ) ) );
-          std::cout << "DELTA: " << delta << "\n";
 
           Tj1_ = Tj2_ = Amax_ / Jmax_;
           Ta_ = ( ( pow ( Amax_ , 2 ) / Jmax_ ) - ( 2 * V0_ ) + sqrt ( delta ) ) / ( 2 * Amax_ );
@@ -121,8 +129,6 @@ bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetP
 
 
                }
-          // if ( Ta_ < 2 * Tj1_ || Td_ < 2 * Tj1_ )
-          //      std::cout << "auto adjustment failed update the control parameters.\n";
           }
      Alim_a_ = Jmax_ * Tj1_;
      Alim_d_ = -Jmax_ * Tj2_;
@@ -130,8 +136,64 @@ bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetP
 
      std::cout << "Ta: " << Ta_ << " || " << "Td: " << Td_ << " || " << "Tv: " << Tv_ << " || " << "Tj1_: " << Tj1_ << " || " << "Tj2: " << Tj2_ << " || " << "Alim_a: " << Alim_a_ << " || " << "Alim_d: " << Alim_d_ << " || " << "Vlim_: " << Vlim_ << "\n";
 
-     finalTime_ = Ta_ + Tv_ + Td_;
+     finalTime_ = ( Ta_ + Tv_ + Td_ );
      std::cout << "finalTime: " << finalTime_ << "\n";
+
+     std::vector<double> maxDisplacementCoeffs;
+     maxDisplacementCoeffs.emplace_back ( initPos [ maxDistIndex ] );
+     maxDisplacementCoeffs.emplace_back ( targetPos [ maxDistIndex ] ); //ta ,tj ,vmax,amax,jmax
+     maxDisplacementCoeffs.emplace_back ( Ta_ );
+     maxDisplacementCoeffs.emplace_back ( Td_ );
+     maxDisplacementCoeffs.emplace_back ( Tv_ );
+     maxDisplacementCoeffs.emplace_back ( Tj1_ );
+     maxDisplacementCoeffs.emplace_back ( Tj2_ );
+     maxDisplacementCoeffs.emplace_back ( Vlim_ );
+     maxDisplacementCoeffs.emplace_back ( Alim_a_ );
+     maxDisplacementCoeffs.emplace_back ( Alim_d_ );
+     maxDisplacementCoeffs.emplace_back ( Jmax_ );
+     maxDisplacementCoeffs.emplace_back ( Jmin_ );
+
+     std::vector<double>res;
+     double alpha = 0.333 , beta = 0.2;
+
+     for ( size_t i = 0; i < dof_; i++ ) {
+          if ( i == maxDistIndex ) {
+               res = maxDisplacementCoeffs;
+
+               }
+          else {
+
+               Vmax_ = ( diffVec [ i ] ) / ( ( 1 - alpha ) * finalTime_ );
+               Amax_ = diffVec [ i ] / ( alpha * ( 1 - alpha ) * ( 1 - beta ) * pow ( finalTime_ , 2 ) );
+               Jmax_ = diffVec [ i ] / ( pow ( alpha , 2 ) * beta * ( 1 - alpha ) * ( 1 - beta ) * pow ( finalTime_ , 3 ) );
+               Vlim_ = Vmax_;
+               Alim_a_ = Amax_;
+               Alim_d_ = -Alim_a_;
+               Jmin_ = -Jmax_;
+               Ta_ = alpha * finalTime_;
+               Td_ = Ta_;
+               Tj1_ = Tj2_ = beta * Ta_;
+               Tv_ = finalTime_ - ( 2 * Ta_ );
+
+               res.emplace_back ( initPos [ i ] );
+               res.emplace_back ( targetPos [ i ] ); //ta ,tj ,vmax,amax,jmax
+               res.emplace_back ( Ta_ );
+               res.emplace_back ( Td_ );
+               res.emplace_back ( Tv_ );
+               res.emplace_back ( Tj1_ );
+               res.emplace_back ( Tj2_ );
+               res.emplace_back ( Vlim_ );
+               res.emplace_back ( Alim_a_ );
+               res.emplace_back ( Alim_d_ );
+               res.emplace_back ( Jmax_ );
+               res.emplace_back ( Jmin_ );
+
+               }
+
+
+          finalCoeffMat_.emplace_back ( res );
+          res.clear ( );
+          }
 
      return true;
      }
@@ -145,58 +207,72 @@ bool Scurve::generatePathAndVel ( double t , std::vector<double> &Pos , std::vec
      double acceleration;
      double jerk;
 
-     std::vector<double>posi,velo,accel,jer;
+     std::vector<double>posi , velo , accel , jer;
      // acceleration phase
-     if ( t >= 0 && t < Tj1_ ) {
-          position = 0 + ( V0_ * t ) + ( Jmax_ * pow ( t , 3 ) ) / 6;
-          velocity = V0_ + ( Jmax_ * pow ( t , 2 ) ) / 2;
-          acceleration = Jmax_ * t;
-          jerk = Jmax_;
-          }
-     else if ( t >= Tj1_ && t < ( Ta_ - Tj1_ ) ) {
-          position = 0 + ( V0_ * t ) + ( Alim_a_ / 6 ) * ( ( 3 * pow ( t , 2 ) ) - ( 3 * Tj1_ *t) + pow ( Tj1_ , 2 ) );
-          velocity = V0_ + Alim_a_ * ( t - ( Tj1_ / 2 ) );
-          acceleration = Jmax_ * Tj1_;
-          jerk = 0;
-          }
-     else if ( t >= ( Ta_ - Tj1_ ) && t < Ta_ ) {
-          position = 0 + ( ( Vlim_ + V0_ ) * ( Ta_ / 2 ) ) - ( Vlim_ * ( Ta_ - t ) ) - ( Jmin_ * ( pow (  (Ta_ - t ) , 3 ) ) ) / 6;
-          velocity = Vlim_ + ( Jmin_ * ( pow ( ( Ta_ - t ) , 2 ) ) ) / 2;
-          acceleration = -Jmin_ * ( Ta_ - t );
-          jerk = Jmin_;
-          }
+     for ( auto &ele : finalCoeffMat_ ) {
 
-     // constant velocity phase
-     else if ( t >= Ta_ && t <= ( Ta_ + Tv_ ) ) {
-          position = 0 + ( ( Vlim_ + V0_ ) * ( Ta_ / 2 ) ) + ( Vlim_ * ( t - Ta_ ) );
-          velocity = Vlim_;
-          acceleration = 0;
-          jerk = 0;
-          }
+          double Ta_ = ele [ 2 ];
+          double Td_ = ele [ 3 ];
+          double Tv_ = ele [ 4 ];
+          double Tj1_ = ele [ 5 ];
+          double Tj2_ = ele [ 6 ];
+          double Vlim_ = ele [ 7 ];
+          double Alim_a_ = ele [ 8 ];
+          double Alim_d_ = ele [ 9 ];
+          double Jmax_ = ele [ 10 ];
+          double Jmin_ = ele [ 11 ];
 
-     // deceleration phase
-     else if ( t >= ( finalTime_ - Td_ ) && t < ( finalTime_ - Td_ + Tj2_ ) ) {
-          position = finalPos_ [ 0 ] - ( ( Vlim_ + V1_ ) * ( Td_ / 2 ) ) + ( Vlim_ * ( t - finalTime_ + Td_ ) ) - ( Jmax_ * ( pow ( ( t - finalTime_ + Td_ ) , 3 ) ) ) / 6;
-          velocity = Vlim_ - ( Jmax_ * ( pow ( ( t - finalTime_ + Td_ ) , 2 ) ) ) / 2;
-          acceleration = Jmin_ * ( t - finalTime_ + Td_ );
-          jerk = Jmin_;
+          if ( t >= 0 && t < Tj1_ ) {
+               position = ele [ 0 ] + ( V0_ * t ) + ( Jmax_ * pow ( t , 3 ) ) / 6;
+               velocity = V0_ + ( Jmax_ * pow ( t , 2 ) ) / 2;
+               acceleration = Jmax_ * t;
+               jerk = Jmax_;
+               }
+          else if ( t >= Tj1_ && t < ( Ta_ - Tj1_ ) ) {
+               position = ele [ 0 ] + ( V0_ * t ) + ( Alim_a_ / 6 ) * ( ( 3 * pow ( t , 2 ) ) - ( 3 * Tj1_ * t ) + pow ( Tj1_ , 2 ) );
+               velocity = V0_ + Alim_a_ * ( t - ( Tj1_ / 2 ) );
+               acceleration = Jmax_ * Tj1_;
+               jerk = 0;
+               }
+          else if ( t >= ( Ta_ - Tj1_ ) && t < Ta_ ) {
+               position = ele [ 0 ] + ( ( Vlim_ + V0_ ) * ( Ta_ / 2 ) ) - ( Vlim_ * ( Ta_ - t ) ) - ( Jmin_ * ( pow ( ( Ta_ - t ) , 3 ) ) ) / 6;
+               velocity = Vlim_ + ( Jmin_ * ( pow ( ( Ta_ - t ) , 2 ) ) ) / 2;
+               acceleration = -Jmin_ * ( Ta_ - t );
+               jerk = Jmin_;
+               }
+
+          // constant velocity phase
+          else if ( t >= Ta_ && t <= ( Ta_ + Tv_ ) ) {
+               position = ele [ 0 ] + ( ( Vlim_ + V0_ ) * ( Ta_ / 2 ) ) + ( Vlim_ * ( t - Ta_ ) );
+               velocity = Vlim_;
+               acceleration = 0;
+               jerk = 0;
+               }
+
+          // deceleration phase
+          else if ( t >= ( finalTime_ - Td_ ) && t < ( finalTime_ - Td_ + Tj2_ ) ) {
+               position = ele [ 1 ] - ( ( Vlim_ + V1_ ) * ( Td_ / 2 ) ) + ( Vlim_ * ( t - finalTime_ + Td_ ) ) - ( Jmax_ * ( pow ( ( t - finalTime_ + Td_ ) , 3 ) ) ) / 6;
+               velocity = Vlim_ - ( Jmax_ * ( pow ( ( t - finalTime_ + Td_ ) , 2 ) ) ) / 2;
+               acceleration = Jmin_ * ( t - finalTime_ + Td_ );
+               jerk = Jmin_;
+               }
+          else if ( t >= ( finalTime_ - Td_ + Tj2_ ) && t < ( finalTime_ - Tj2_ ) ) {
+               position = ele [ 1 ] - ( ( Vlim_ + V1_ ) * ( Td_ / 2 ) ) + ( Vlim_ * ( t - finalTime_ + Td_ ) ) + ( ( Alim_d_ / 6 ) * ( 3 * ( pow ( ( t - finalTime_ + Td_ ) , 2 ) ) - ( 3 * Tj2_ * ( t - finalTime_ + Td_ ) ) + pow ( Tj2_ , 2 ) ) );
+               velocity = Vlim_ + Alim_d_ * ( t - finalTime_ + Td_ - ( Tj2_ / 2 ) );
+               acceleration = Alim_d_;
+               jerk = 0;
+               }
+          else if ( t >= ( finalTime_ - Tj2_ ) && t <= finalTime_ ) {
+               position = ele [ 1 ] - V1_ * ( finalTime_ - t ) - ( Jmax_ * ( pow ( ( finalTime_ - t ) , 3 ) ) ) / 6;
+               velocity = V1_ + ( Jmax_ * ( pow ( ( finalTime_ - t ) , 2 ) ) ) / 2;
+               acceleration = Jmin_ * ( finalTime_ - t );
+               jerk = Jmax_;
+               }
+          posi.emplace_back ( position );
+          velo.emplace_back ( velocity );
+          accel.emplace_back ( acceleration );
+          jer.emplace_back ( jerk );
           }
-     else if ( t >= ( finalTime_ - Td_ + Tj2_ ) && t < ( finalTime_ - Tj2_ ) ) {
-          position = finalPos_ [ 0 ] - ( ( Vlim_ + V1_ ) * ( Td_ / 2 ) ) + ( Vlim_ * ( t - finalTime_ + Td_ ) ) + ( ( Alim_d_ / 6 ) * ( 3 * ( pow ( ( t - finalTime_ + Td_ ) , 2 ) ) - ( 3 * Tj2_ * ( t - finalTime_ + Td_ ) ) + pow ( Tj2_ , 2 ) ) );
-          velocity = Vlim_ + Alim_d_ * ( t - finalTime_ + Td_ - ( Tj2_ / 2 ) );
-          acceleration = Alim_d_;
-          jerk = 0;
-          }
-     else if ( t >= ( finalTime_ - Tj2_ ) && t <= finalTime_ ) {
-          position = finalPos_ [ 0 ] - V1_ * ( finalTime_ - t ) - ( Jmax_ * ( pow ( ( finalTime_ - t ) , 3 ) ) ) / 6;
-          velocity = V1_ + ( Jmax_ * ( pow ( ( finalTime_ - t ) , 2 ) ) ) / 2;
-          acceleration = Jmin_ * ( finalTime_ - t );
-          jerk = Jmax_;
-          }
-     posi.emplace_back ( position );
-     velo.emplace_back ( velocity );
-     accel.emplace_back ( acceleration );
-     jer.emplace_back ( jerk );
      Pos = posi;
      Vel = velo;
      Acc = accel;
