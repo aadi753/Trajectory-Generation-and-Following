@@ -31,7 +31,7 @@ class Scurve {
      public:
      Scurve ( );
      Scurve ( int dof );
-     bool calcCoeff ( std::vector<double>initPos , std::vector<double>targetPos , double maxVel = 20 , double maxAcc = 20 , double maxJerk = 20 , std::vector<double>initVel = {} , std::vector<double>finalVel = {} );
+     bool calcCoeffs ( std::vector<double>initPos , std::vector<double>targetPos , double maxVel = 20 , double maxAcc = 20 , double maxJerk = 20 , std::vector<double>initVel = {} , std::vector<double>finalVel = {},bool degrees=true );
      bool generatePathAndVel ( double t , std::vector<double> &pos , std::vector<double> &vel , std::vector<double> &acc , std::vector<double> &jerk );
 
      ~Scurve ( );

@@ -5,17 +5,39 @@ Scurve::Scurve ( ) {
      }
 Scurve::Scurve ( int dof ) :dof_ ( dof ) { }
 
-bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetPos , double maxVel , double maxAcc , double maxJerk , std::vector<double>initVel , std::vector<double>finalVel ) {
-     Vmax_ = maxVel;
-     Amax_ = maxAcc;
-     Jmax_ = maxJerk;
-     Vmin_ = -Vmax_;
-     Amin_ = -Amax_;
-     Jmin_ = -Jmax_;
-     initPos_ = initPos;
-     finalPos_ = targetPos;
-     V0_ = initVel [ 0 ];
-     V1_ = finalVel [ 0 ];
+bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>targetPos , double maxVel , double maxAcc , double maxJerk , std::vector<double>initVel , std::vector<double>finalVel , bool degrees ) {
+
+     if ( degrees ) {
+          Vmax_ = maxVel * ( M_PI / 180 );
+          Amax_ = maxAcc * ( M_PI / 180 );
+          Jmax_ = maxJerk * ( M_PI / 180 );
+          Vmin_ = -Vmax_ ;
+          Amin_ = -Amax_ ;
+          Jmin_ = -Jmax_ ;
+          V0_ = initVel [ 0 ] * ( M_PI / 180 );
+          V1_ = finalVel [ 0 ] * ( M_PI / 180 );
+
+          for ( size_t i = 0; i < targetPos.size ( ); i++ ) {
+               targetPos [ i ] = targetPos [ i ] * ( M_PI / 180 );
+               }
+
+          initPos_ = initPos;
+          finalPos_ = targetPos;
+
+          }
+     else {
+
+          Vmax_ = maxVel;
+          Amax_ = maxAcc;
+          Jmax_ = maxJerk;
+          Vmin_ = -Vmax_;
+          Amin_ = -Amax_;
+          Jmin_ = -Jmax_;
+          initPos_ = initPos;
+          finalPos_ = targetPos;
+          V0_ = initVel [ 0 ];
+          V1_ = finalVel [ 0 ];
+          }
 
      int maxDistIndex;
      std::vector<double> diffVec;
@@ -26,8 +48,9 @@ bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetP
      double displacement = *std::max_element ( diffVec.begin ( ) , diffVec.end ( ) );
      auto it = std::find ( diffVec.begin ( ) , diffVec.end ( ) , displacement );
      maxDistIndex = it - diffVec.begin ( );
-     std::cout <<"max Displacement: "<< displacement << "\n";
-     std::cout <<"maxDistance index: "<< maxDistIndex << "\n";
+
+     std::cout << "max Displacement: " << displacement << "\n";
+     std::cout << "maxDistance index: " << maxDistIndex << "\n";
 
      double TJ_star = std::min ( sqrt ( abs ( V1_ - V0_ ) / Jmax_ ) , Amax_ / Jmax_ );
 
@@ -130,6 +153,8 @@ bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetP
 
                }
           }
+    
+
      Alim_a_ = Jmax_ * Tj1_;
      Alim_d_ = -Jmax_ * Tj2_;
      Vlim_ = V1_ - ( Td_ - Tj2_ ) * Alim_d_;
@@ -154,7 +179,7 @@ bool Scurve::calcCoeff ( std::vector<double>initPos , std::vector<double>targetP
      maxDisplacementCoeffs.emplace_back ( Jmin_ );
 
      std::vector<double>res;
-     double alpha = 0.333 , beta = 0.2;
+     double alpha = 0.333 , beta = 0.2; //? do not change these values unless you know what they do!!.
 
      for ( size_t i = 0; i < dof_; i++ ) {
           if ( i == maxDistIndex ) {
