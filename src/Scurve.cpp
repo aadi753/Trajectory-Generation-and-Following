@@ -185,7 +185,7 @@ bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>target
      maxDisplacementCoeffs.emplace_back ( Jmin_ );
 
      std::vector<double>res;
-     double alpha = 0.333 , beta = 0.2; //? do not change these values unless you know what they do!!.
+     double alpha = 0.4 , beta = 0.2; //? do not change these values unless you know what they do!!.
 
      for ( size_t i = 0; i < dof_; i++ ) {
           if ( i == maxDistIndex ) {
