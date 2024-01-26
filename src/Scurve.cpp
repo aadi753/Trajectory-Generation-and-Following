@@ -43,6 +43,12 @@ bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>target
      std::vector<double> diffVec;
      for ( size_t i = 0; i < targetPos.size ( ); i++ ) {
           diffVec.emplace_back ( std::abs ( targetPos [ i ] - initPos [ i ] ) );
+          if ( initPos [ i ] > targetPos [ i ] ) {
+               directionVec.emplace_back ( -1 );
+
+               }
+          else
+               directionVec.emplace_back ( 1 );
           }
 
      double displacement = *std::max_element ( diffVec.begin ( ) , diffVec.end ( ) );
@@ -165,8 +171,8 @@ bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>target
      std::cout << "finalTime: " << finalTime_ << "\n";
 
      std::vector<double> maxDisplacementCoeffs;
-     maxDisplacementCoeffs.emplace_back ( initPos [ maxDistIndex ] );
-     maxDisplacementCoeffs.emplace_back ( targetPos [ maxDistIndex ] ); //ta ,tj ,vmax,amax,jmax
+     maxDisplacementCoeffs.emplace_back ( initPos [ maxDistIndex ]*directionVec[maxDistIndex] );
+     maxDisplacementCoeffs.emplace_back ( targetPos [ maxDistIndex ] * directionVec [ maxDistIndex ] ); //ta ,tj ,vmax,amax,jmax
      maxDisplacementCoeffs.emplace_back ( Ta_ );
      maxDisplacementCoeffs.emplace_back ( Td_ );
      maxDisplacementCoeffs.emplace_back ( Tv_ );
@@ -200,8 +206,8 @@ bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>target
                Tj1_ = Tj2_ = beta * Ta_;
                Tv_ = finalTime_ - ( 2 * Ta_ );
 
-               res.emplace_back ( initPos [ i ] );
-               res.emplace_back ( targetPos [ i ] ); //ta ,tj ,vmax,amax,jmax
+               res.emplace_back ( initPos [ i ]*directionVec[i] );
+               res.emplace_back ( targetPos [ i ]*directionVec[i] ); //ta ,tj ,vmax,amax,jmax
                res.emplace_back ( Ta_ );
                res.emplace_back ( Td_ );
                res.emplace_back ( Tv_ );
@@ -231,7 +237,7 @@ bool Scurve::generatePathAndVel ( double t , std::vector<double> &Pos , std::vec
      double velocity;
      double acceleration;
      double jerk;
-
+     int i = 0;
      std::vector<double>posi , velo , accel , jer;
      // acceleration phase
      for ( auto &ele : finalCoeffMat_ ) {
@@ -293,10 +299,11 @@ bool Scurve::generatePathAndVel ( double t , std::vector<double> &Pos , std::vec
                acceleration = Jmin_ * ( finalTime_ - t );
                jerk = Jmax_;
                }
-          posi.emplace_back ( position );
-          velo.emplace_back ( velocity );
-          accel.emplace_back ( acceleration );
-          jer.emplace_back ( jerk );
+          posi.emplace_back ( position * directionVec [ i ] );
+          velo.emplace_back ( velocity * directionVec [ i ] );
+          accel.emplace_back ( acceleration * directionVec [ i ] );
+          jer.emplace_back ( jerk * directionVec [ i ] );
+          i++;
           }
      Pos = posi;
      Vel = velo;

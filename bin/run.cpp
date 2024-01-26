@@ -13,9 +13,9 @@ int main ( ) {
      std::vector<double>pos1 , vel1 , acc1 , jerk1;
           // auto start = std::chrono::high_resolution_clock::now ( );
           // sc.calcCoeff ( { 10 } , 5 , 10 , 30 , { 1 } , { 0 } );
-     sc.calcCoeffs ( { 0,0,0,0,0,0 } , { 10,15,90,20,9,12 } , 20 , 20 , 20 , { 0 } , { 0 } );
-     int joint = 2;
-     for ( double i = 0; i < 11; i += 0.1 ) {
+     sc.calcCoeffs ( { 0,0,0,0,0,0 } , { 10,-150,70,20,9,12 } , 30 , 30 , 30,{0},{0},false  );
+     int joint = 1;
+     for ( double i = 0; i < 51; i += 0.001 ) {
           bool status = sc.generatePathAndVel ( i , pos , vel , acc , jerk );
           if ( status == false )break;
           pos1.emplace_back ( pos [ joint ] );
