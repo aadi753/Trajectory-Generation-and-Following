@@ -43,6 +43,7 @@ bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>target
      std::vector<double> diffVec;
      if ( directionVec.size ( ) != 0 )
           directionVec.clear ( );
+
      for ( size_t i = 0; i < targetPos.size ( ); i++ ) {
           diffVec.emplace_back ( std::abs ( targetPos [ i ] - initPos [ i ] ) );
           if ( initPos [ i ] > targetPos [ i ] ) {
@@ -114,7 +115,7 @@ bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>target
      // std::cout << "time for const velocity segment: " << Tv_<<"\n";
      if ( Tv_ > 0 ) // means our assumption of vlim=Vmax was right and can continue with the above values 
           {
-          // std::cout << "max vel will be reached.. \n";
+          std::cout << "max vel will be reached.. \n";
           }
 
 
@@ -167,7 +168,7 @@ bool Scurve::calcCoeffs ( std::vector<double>initPos , std::vector<double>target
      Alim_d_ = -Jmax_ * Tj2_;
      Vlim_ = V1_ - ( Td_ - Tj2_ ) * Alim_d_;
 
-     // std::cout << "Ta: " << Ta_ << " || " << "Td: " << Td_ << " || " << "Tv: " << Tv_ << " || " << "Tj1_: " << Tj1_ << " || " << "Tj2: " << Tj2_ << " || " << "Alim_a: " << Alim_a_ << " || " << "Alim_d: " << Alim_d_ << " || " << "Vlim_: " << Vlim_ << "\n";
+     std::cout << "Ta: " << Ta_ << " || " << "Td: " << Td_ << " || " << "Tv: " << Tv_ << " || " << "Tj1_: " << Tj1_ << " || " << "Tj2: " << Tj2_ << " || " << "Alim_a: " << Alim_a_ << " || " << "Alim_d: " << Alim_d_ << " || " << "Vlim_: " << Vlim_ << "\n";
 
      finalTime_ = ( Ta_ + Tv_ + Td_ );
      // std::cout << "finalTime: " << finalTime_ << "\n";
@@ -301,6 +302,12 @@ bool Scurve::generatePathAndVel ( double t , std::vector<double> &Pos , std::vec
                velocity = V1_ + ( Jmax_ * ( pow ( ( finalTime_ - t ) , 2 ) ) ) / 2;
                acceleration = Jmin_ * ( finalTime_ - t );
                jerk = Jmax_;
+               }
+
+          if ( std::abs ( velocity ) > Vmax_ + 0.01 || std::isnan ( velocity ) ) {
+               std::cout << " [SEPTIC]: VELOCITY EXCEEDED \n";
+               velocity = 0;   // robot should not move if the velocity is not
+               return false;
                }
           posi.emplace_back ( position * directionVec [ i ] );
           velo.emplace_back ( velocity * directionVec [ i ] );
