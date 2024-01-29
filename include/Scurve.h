@@ -57,7 +57,7 @@ class Scurve {
       * @return true
       * @return false
       */
-     bool calcCoeffs ( std::vector<double>initPos , std::vector<double>targetPos , double maxVel = 20 , double maxAcc = 20 , double maxJerk = 20 , std::vector<double>initVel = { 0 } , std::vector<double>finalVel = { 0 } , bool degrees = true );
+     bool calcCoeffs ( std::vector<double>initPos , std::vector<double>targetPos , double maxVel = 20 , double maxAcc = 20 , double maxJerk = 20 , bool degrees = true , std::vector<double>initVel = { 0 } , std::vector<double>finalVel = { 0 } );
 /**
  *@brief generates the position,velocity,acceleration,jerk at the given time.
  *
