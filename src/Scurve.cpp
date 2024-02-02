@@ -304,7 +304,7 @@ bool Scurve::generatePathAndVel ( double t , std::vector<double> &Pos , std::vec
                jerk = Jmax_;
                }
 
-          if ( std::abs ( velocity ) > Vmax_ + 0.01 || std::isnan ( velocity ) ) {
+          if ( std::abs ( velocity ) > Vlim_ + 0.01 || std::isnan ( velocity ) ) {
                std::cout << " [SEPTIC]: VELOCITY EXCEEDED \n";
                velocity = 0;   // robot should not move if the velocity is not
                return false;

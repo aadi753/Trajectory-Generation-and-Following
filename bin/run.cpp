@@ -13,7 +13,7 @@ int main ( ) {
      std::vector<double>pos1 , vel1 , acc1 , jerk1;
           // auto start = std::chrono::high_resolution_clock::now ( );
           // sc.calcCoeff ( { 10 } , 5 , 10 , 30 , { 1 } , { 0 } );
-     sc.calcCoeffs ( { 0,0.34,0,0,0,0 } , { 0,0,0,0,0,0 } , 30 , 30 , 30 , true);
+     sc.calcCoeffs ( { 0,0,0,0,0,0 } , { 0,90,0,0,0,0 } , 30 , 30 , 30 , true);
      int joint = 1;
      for ( double i = 0; i < 51; i += 0.01 ) {
           bool status = sc.generatePathAndVel ( i , pos , vel , acc , jerk );
