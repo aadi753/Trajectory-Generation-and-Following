@@ -7,7 +7,7 @@
 #include <septic.h>
 #include <memory>
 #include <chrono>
-#include <trajectories/trajectories.h>
+#include <trajectories.h>
 #include <matplotlibcpp.h>
 #include <quintUpdated.h>
 #include <septicUpdated.h>

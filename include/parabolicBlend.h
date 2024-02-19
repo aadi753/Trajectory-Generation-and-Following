@@ -5,7 +5,7 @@
 #include <Eigen/Dense>
 #include <Eigen/LU>
 #include <vector>
-#include <trajectories/trajectories.h>
+#include <trajectories.h>
 
 class ParabolicBlend : public Trajectories
 {
